@@ -12,10 +12,10 @@ export const data = [
 		demo: "https://thiagomartins.vercel.app",
 	},
 	{
-		name: "Rick & Morty",
+		name: "GreenPortal",
 		image: "/projects/rick&morty.png",
 		description: "Rick and Morty API Cards Website",
-		demo: "",
+		demo: "https://greenportal.vercel.app",
 	},
 ];
 

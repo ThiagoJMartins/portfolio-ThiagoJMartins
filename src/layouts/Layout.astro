@@ -1,0 +1,111 @@
+---
+import '@fontsource/fira-code'
+import Header from '../components/Header.astro'
+interface Props {
+  title: string
+}
+
+const { title } = Astro.props
+---
+
+<!doctype html>
+<html lang="es" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Portfolio of Thiago Martins, Fullstack Developer with experience in JavaScript, React, Astro, NextJS, TailwindCSS, NodeJS, among other related technologies"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta property="og:title" content={title} />
+    <meta
+      property="og:description"
+      content="Portfolio of Thiago Martins, Fullstack Developer with experience in JavaScript, React, Astro, NextJS, TailwindCSS, NodeJS, among other related technologies"
+    />
+    <meta property="og:site_name" content="David.dev" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://thiagomartins.vercel.app/" />
+    <meta property="og:image" content="/open-graph-image.png" />
+  </head>
+  <body
+    class="bg-bgLight text-[#3d3d3d] dark:bg-bgDark px-3 md:px-6 pb-5 dark:text-white w-full max-w-[1080px] m-auto">
+    <Header />
+    <main class="flex flex-col gap-14">
+      <slot />
+    </main>
+  </body>
+</html>
+<style is:global>
+  html {
+    font-family: sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  #footer,
+  .logo {
+    font-family: 'Fira Code', sans-serif;
+  }
+
+  h2 {
+    font-size: 40px;
+    line-height: 36px;
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+</style>
+<script is:inline>
+  const theme = (() => {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark'
+    } else return 'light'
+  })()
+
+  const lightButton = document.getElementById('theme-light')
+  const darkButton = document.getElementById('theme-dark')
+
+  if (theme === 'light') {
+    if (!darkButton.hasAttribute('hidden')) {
+      darkButton.toggleAttribute('hidden')
+      lightButton.toggleAttribute('hidden')
+    }
+    document.documentElement.classList.remove('dark')
+  } else {
+    if (!lightButton.hasAttribute('hidden')) {
+      darkButton.toggleAttribute('hidden')
+      lightButton.toggleAttribute('hidden')
+    }
+    document.documentElement.classList.add('dark')
+  }
+  localStorage.setItem('theme', theme)
+
+  // Evento Click al botón theme
+  darkButton.addEventListener('click', () => {
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('theme', 'light')
+      darkButton.toggleAttribute('hidden')
+      lightButton.toggleAttribute('hidden')
+    }
+  })
+  lightButton.addEventListener('click', () => {
+    if (localStorage.getItem('theme') !== 'dark') {
+      document.documentElement.classList.add('dark')
+      localStorage.setItem('theme', 'dark')
+      darkButton.toggleAttribute('hidden')
+      lightButton.toggleAttribute('hidden')
+    }
+  })
+
+  const eventFunction = (event) => {
+    if (event.persisted) localStorage.removeItem('theme')
+  }
+  window.addEventListener('pagehide', eventFunction)
+</script>

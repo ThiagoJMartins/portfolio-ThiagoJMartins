@@ -1,0 +1,114 @@
+---
+
+---
+
+<form class="grid place-items-center w-full max-w-2xl">
+  <fieldset
+    class="grid shadow-md border-[.5px] border-slate-400 dark:border-slate-800 dark:bg-transparent dark:shadow-slate-600 dark:shadow-sm rounded-2xl p-5 w-full place-items-center">
+    <legend class="font-semibold text-[#06C300] text-xl p-1 rounded-lg"
+      >Send here your message</legend
+    >
+    <label class="flex flex-col w-full p-2 font-semibold -mt-3">
+      Name
+      <input
+        name="name"
+        class="font-medium shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+        type="text"
+        placeholder="Your name"
+        required
+      />
+    </label>
+    <label class="flex flex-col w-full p-2 font-semibold -mt-3">
+      Email
+      <input
+        name="email"
+        class="font-medium shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+        type="email"
+        placeholder="abc@email.com"
+        required
+      />
+    </label>
+    <label class="flex flex-col w-full p-2 font-semibold">
+      Subject
+      <input
+        name="subject"
+        class="font-medium shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+        type="tel"
+        placeholder="Your project idea"
+        required
+      />
+    </label>
+    <label class="flex flex-col w-full p-2 font-semibold">
+      Message
+      <textarea
+        name="message"
+        class="font-medium block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+        placeholder="Project description and requirements..."
+        id="message"
+        cols="30"
+        rows="10"
+        minlength="10"
+        maxlength="300"
+        required></textarea>
+    </label>
+  </fieldset>
+  <button
+    id="send"
+    type="submit"
+    class="px-3 py-2 mt-3 text-sm font-semibold text-center inline-flex items-center transition ease-in delay-150 hover:text-slate-900 border-2 border-[#06C300] hover:border-transparent hover:bg-[#06C300] rounded-md">
+    <svg class="w-3 h-3 me-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 16">
+      <path
+        d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"
+      ></path>
+      <path
+        d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"
+      ></path>
+    </svg>
+     Submit
+  </button>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" is:inline></script>
+<script src="https://smtpjs.com/v3/smtp.js" is:inline></script>
+<script type="module" is:inline>
+  const $form = document.querySelector('form')
+  const button = document.getElementById('send')
+
+  function sendEmail(event) {
+    event.preventDefault()
+    const data = new FormData($form, button)
+    const name = data.get('name')
+    const emailAddress = data.get('email')
+    const subject = data.get('subject')
+    const message = data.get('message')
+
+    Email.send({
+      SecureToken: '79335ea3-cb74-47d9-9bd3-d96b2803e9a3',
+      To: 'thiagodev.martins@gmail.com',
+      From: 'thiagodev.martins@gmail.com',
+      Subject: `${subject}`,
+      Body: `<h1>Message from: ${name}</h1>
+      <h3>Adress: ${emailAddress}</h3>
+      <p>${message}</p>`
+    }).then((message) => {
+      if (message === 'OK') {
+        Swal.fire({
+          title: '¡Perfect!',
+          text: 'Your message has been sent, I will contact you as soon as possible.',
+          icon: 'success'
+        })
+        $form.reset()
+      } else {
+        // alert(message)
+        Swal.fire({
+          icon: 'error',
+          title: '¡Oops...!',
+          text: 'Looks like we have a problem here... u can try to contactme via LinkedIn',
+          footer:
+            '<a href="https://www.linkedin.com/in/thiago-javier-martins/" target="_blank">LinkedIn</a>'
+        })
+      }
+    })
+  }
+
+  $form.addEventListener('submit', sendEmail)
+</script>

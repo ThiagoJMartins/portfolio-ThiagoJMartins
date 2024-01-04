@@ -40,9 +40,4 @@ export const links = [
 		name: "My Work",
 		icon: "my-job.svg",
 	},
-	{
-		link: "contact",
-		name: "Contact Me",
-		icon: "contact.svg",
-	},
 ];

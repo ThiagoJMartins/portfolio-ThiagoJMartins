@@ -19,7 +19,7 @@ export const data = [
 	},
 	{
 		name: "Ares Tac Toe",
-		image: "/projects/arestactoe.png",
+		image: "/projects/arestactoe.PNG",
 		description: "Tic Tac Toe game created with React",
 		demo: "https://arestactoe.vercel.app",
 	},

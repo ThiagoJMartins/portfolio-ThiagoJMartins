@@ -17,6 +17,12 @@ export const data = [
 		description: "Rick and Morty API Cards Website",
 		demo: "https://greenportal.vercel.app",
 	},
+	{
+		name: "Ares Tac Toe",
+		image: "/projects/arestactoe.png",
+		description: "Tic Tac Toe game created with React",
+		demo: "https://arestactoe.vercel.app",
+	},
 ];
 
 export const links = [

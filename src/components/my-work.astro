@@ -14,6 +14,8 @@ const skills = [
   ['sequelize', 'Sequelize'],
   ['postgresql', 'PostgreSQL'],
   ['mongo', 'MongoDB'],
+  ['firebase', 'Firebase'],
+  ['cloudinary','Cloudinary']
 ]
 
 import { data } from '../utils/projects-resource.js'
@@ -49,8 +51,8 @@ import { data } from '../utils/projects-resource.js'
   <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-3 w-full justify-center mt-4">
     {
       data.map((project) => (
-        <div class="relative p-2 dark:bg-slate-800 bg-slate-300 shadow-sm shadow-slate-400 dark:shadow-slate-600 rounded-lg transition ease-in-out duration-300">
-          <div class="absolute inset-0 flex flex-row items-center justify-center opacity-0 hover:opacity-100 transition duration-300 hover:bg-[#000000c2] rounded-xl">
+        <div class="relative p-2 dark:bg-slate-800 bg-slate-300 shadow-sm shadow-slate-400 dark:shadow-slate-600 rounded-lg transition ease-in-out duration-300 hover:scale-105">
+          <div class="mx-2 mt-2 mb-16 absolute inset-0 flex flex-wrap items-center justify-center opacity-0 hover:opacity-100 transition duration-300 hover:bg-[#000000d7] rounded-md">
               {project.skills.map((skill) => (
                 <img
                   class="object-contain h-8"
@@ -61,17 +63,17 @@ import { data } from '../utils/projects-resource.js'
                 />
               ))}
           </div>
-          <div class="hover:opacity-20 transition ease-in-out duration-300">            
+          <div >            
             <img
             class="h-auto object-contain rounded-md "
             src={project.image}
             alt={project.name}
             width="450px"
           />
-            <div class="flex w-full justify-between mt-8 hover:opacity-0">
+            <div class="flex w-full justify-between mt-8">
             <h4 class="font-bold">{project.name}</h4>
             <a
-              class="font-semibold"
+              class="font-medium"
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"

@@ -1,5 +1,23 @@
 export const data = [
 	{
+		name: "KaroKids eCommerce",
+		image: "/projects/karokids.webp",
+		description: "eCommerce for kids clothes",
+		demo: "https://karokids-tienda.vercel.app",
+		skills: [
+			"Javascript",
+			"React",
+			"Redux",
+			"NodeJS",
+			"Express",
+			"Sequelize",
+			"PostgreSQL",
+			"Firebase",
+			"Cloudinary",
+			"MercadoPago",
+		],
+	},
+	{
 		name: "Ares GamesDB",
 		image: "/projects/aresgamesdb.webp",
 		description: "Games Database with RAWG API",

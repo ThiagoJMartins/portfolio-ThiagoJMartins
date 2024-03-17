@@ -15,7 +15,8 @@ const skills = [
   ['postgresql', 'PostgreSQL'],
   ['mongo', 'MongoDB'],
   ['firebase', 'Firebase'],
-  ['cloudinary','Cloudinary']
+  ['cloudinary','Cloudinary'],
+  ['mercadopago', 'MercadoPago']
 ]
 
 import { data } from '../utils/projects-resource.js'
@@ -56,8 +57,8 @@ import { data } from '../utils/projects-resource.js'
               {project.skills.map((skill) => (
                 <img
                   class="object-contain h-8"
-                  width="70"
-                  height="70"
+                  width="50"
+                  height="50"
                   src={`/skills/${skill.toLocaleLowerCase()}.svg`}
                   alt={skill}
                 />

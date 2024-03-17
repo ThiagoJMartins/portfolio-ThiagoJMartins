@@ -4,30 +4,35 @@ export const data = [
 		image: "/projects/aresgamesdb.webp",
 		description: "Games Database with RAWG API",
 		demo: "https://ares-gamesdb.vercel.app",
+		skills: ["React", "Redux", "NodeJS", "PostgreSQL"],
 	},
 	{
 		name: "Personal Porfolio",
 		image: "/projects/portfolio.webp",
 		description: "Personal portfolio with Astro and Tailwind",
 		demo: "https://thiagomartins.vercel.app",
+		skills: ["Astro", "Tailwind"],
 	},
 	{
 		name: "GreenPortal",
 		image: "/projects/rick&morty.webp",
 		description: "Rick and Morty API Cards Website",
 		demo: "https://greenportal.vercel.app",
+		skills: ["React", "Redux", "NodeJS", "PostgreSQL"],
 	},
 	{
 		name: "Ares Tac Toe",
 		image: "/projects/arestactoe.webp",
 		description: "Tic Tac Toe game created with React",
 		demo: "https://arestactoe.vercel.app",
+		skills: ["HTML", "CSS", "JavaScript"],
 	},
 	{
 		name: "NotesAres",
 		image: "/projects/notesares.webp",
 		description: "Notes app",
 		demo: "https://notesares.netlify.app/",
+		skills: ["HTML", "CSS", "JavaScript"],
 	},
 ];
 

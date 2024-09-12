@@ -1,5 +1,12 @@
 export const data = [
 	{
+		name: "MedicShop",
+		image: "/projects/medicshop.webp",
+		description: "Marketplace for medical supplies",
+		demo: "https://medic.shop",
+		skills: ["Typescript", "React", "Redux", "NodeJS", "Express", "Mongo"],
+	},
+	{
 		name: "KaroKids eCommerce",
 		image: "/projects/karokids.webp",
 		description: "eCommerce for kids clothes",
@@ -14,7 +21,6 @@ export const data = [
 			"PostgreSQL",
 			"Firebase",
 			"Cloudinary",
-			"MercadoPago",
 		],
 	},
 	{

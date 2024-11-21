@@ -5,6 +5,7 @@ export const data = [
 		description: "Marketplace for medical supplies",
 		demo: "https://medic.shop",
 		skills: ["Typescript", "React", "Redux", "NodeJS", "Express", "Mongo"],
+		job: true,
 	},
 	{
 		name: "KaroKids eCommerce",
@@ -22,6 +23,7 @@ export const data = [
 			"Firebase",
 			"Cloudinary",
 		],
+		job: true,
 	},
 	{
 		name: "Ares GamesDB",

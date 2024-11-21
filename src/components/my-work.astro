@@ -1,92 +1,151 @@
 ---
 const skills = [
-  ['html', 'HTML'],
-  ['css', 'CSS'],
-  ['javascript', 'JavaScript'],
-  ['typescript', 'TypeScript'],
-  ['nodejs', 'NodeJS'],
-  ['express', 'Express'],
-  ['react', 'React'],
-  ['astro', 'Astro'],
-  ['next', 'NextJS'],
-  ['tailwind', 'Tailwind'],
-  ['redux', 'Redux'],
-  ['sequelize', 'Sequelize'],
-  ['postgresql', 'PostgreSQL'],
-  ['mongo', 'MongoDB'],
-  ['firebase', 'Firebase'],
-  ['cloudinary','Cloudinary'],
-]
+	["html", "HTML"],
+	["css", "CSS"],
+	["javascript", "JavaScript"],
+	["typescript", "TypeScript"],
+	["nodejs", "NodeJS"],
+	["express", "Express"],
+	["react", "React"],
+	["astro", "Astro"],
+	["next", "NextJS"],
+	["tailwind", "Tailwind"],
+	["redux", "Redux"],
+	["zustand", "Zustand"],
+	["sequelize", "Sequelize"],
+	["postgresql", "PostgreSQL"],
+	["mongo", "MongoDB"],
+];
 
-import { data } from '../utils/projects-resource.js'
+import { certifications } from "../utils/certifications-paths.js";
+
+import { data } from "../utils/projects-resource.js";
 ---
 
 <section id="my-job" class="">
-  <h2>My Work</h2>
-  <div class="flex flex-col-reverse mt-4 gap-10">
-    <article class="flex flex-col w-full">
-      <h3 class="dark:text-[#06C300] text-[#31633D] text-2xl font-bold mx-auto">
-        Skills
-      </h3>
-      <div
-        class="grid grid-cols-3 gap-4 w-full md:flex md:flex-wrap md:justify-center md:gap-4 mt-6 md:px-14">
-        {
-          skills.map((skill) => (
-            <div class="grid place-items-center rounded-lg bg-slate-800 dark:bg-slate-700 gap-3 p-1 px-2 transition ease-in-out hover:-translate-y-1 hover:scale-115 duration-300">
-              <img
-                class="object-contain h-8 justify-start"
-                width="70"
-                height="70"
-                src={`/skills/${skill[0]}.svg`}
-                alt={skill[1]}
-              />
-              <span class="font-semibold text-slate-400 dark:text-slate-300">{skill[1]}</span>
-            </div>
-          ))
-        }
-      </div>
-    </article>
- <article class="flex flex-col w-full">
-  <h3 class="dark:text-[#06C300] text-[#31633D] text-2xl font-bold mx-auto">Projects</h3>
-  <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-3 w-full justify-center mt-4">
-    {
-      data.map((project) => (
-        <div class="relative p-2 dark:bg-slate-800 bg-slate-300 shadow-sm shadow-slate-400 dark:shadow-slate-600 rounded-lg transition ease-in-out duration-300 hover:scale-105">
-          <div class="mx-2 mt-2 mb-16 absolute inset-0 flex flex-wrap items-center justify-center opacity-0 hover:opacity-100 transition duration-300 hover:bg-[#000000d7] rounded-md">
-              {project.skills.map((skill) => (
-                <img
-                  class="object-contain h-8"
-                  width="50"
-                  height="50"
-                  src={`/skills/${skill.toLocaleLowerCase()}.svg`}
-                  alt={skill}
-                />
-              ))}
-          </div>
-          <div >            
-            <img
-            class="h-auto object-contain rounded-md "
-            src={project.image}
-            alt={project.name}
-            width="450px"
-          />
-            <div class="flex w-full justify-between mt-8">
-            <h4 class="font-bold">{project.name}</h4>
-            <a
-              class="font-medium"
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Demo
-            </a>
-            </div>
-          </div>
-          
-        </div>
-      ))
-    }
-  </div>
-</article>
-  </div>
+	<h2>My Work</h2>
+	<div class="flex flex-col-reverse mt-4 gap-10">
+		<article class="flex flex-col w-full">
+			<h3
+				class="text-2xl font-bold text-center mx-auto dark:text-[#06C300] text-[#31633D]"
+			>
+				Certifications
+			</h3>
+			<div class="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 px-4 md:px-14">
+				{
+					certifications.map((certification) => (
+						<div class="flex flex-col items-center rounded-lg bg-slate-800 dark:bg-slate-700 shadow-lg p-4 transition-transform ease-in-out hover:-translate-y-2 hover:scale-105 duration-300">
+							<a
+								href={certification.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="w-full"
+							>
+								<img
+									class="w-full max-h-[200px] object-contain rounded-md"
+									src={certification.image}
+									alt={certification.name}
+								/>
+							</a>
+							<div class="mt-4 text-center">
+								<span class="block text-lg font-semibold text-slate-200 dark:text-slate-100">
+									{certification.name}
+								</span>
+								<span class="block text-sm font-medium text-slate-400 dark:text-slate-300">
+									{certification.date}
+								</span>
+								<span class="block text-sm font-medium text-slate-400 dark:text-slate-300">
+									{certification.organization}
+								</span>
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</article>
+
+		<article class="flex flex-col w-full">
+			<h3 class="dark:text-[#06C300] text-[#31633D] text-2xl font-bold mx-auto">
+				Skills
+			</h3>
+			<div
+				class="grid grid-cols-3 gap-4 w-full md:flex md:flex-wrap md:justify-center md:gap-4 mt-6 md:px-14"
+			>
+				{
+					skills.map((skill) => (
+						<div class="grid place-items-center rounded-lg bg-slate-800 dark:bg-slate-700 gap-3 p-1 px-2 transition ease-in-out hover:-translate-y-1 hover:scale-115 duration-300">
+							<img
+								class="object-contain h-8 justify-start"
+								width="70"
+								height="70"
+								src={`/skills/${skill[0]}.svg`}
+								alt={skill[1]}
+							/>
+							<span class="font-semibold text-slate-400 dark:text-slate-300">
+								{skill[1]}
+							</span>
+						</div>
+					))
+				}
+			</div>
+		</article>
+		<article class="flex flex-col w-full">
+			<h3 class="dark:text-[#06C300] text-[#31633D] text-2xl font-bold mx-auto">
+				Projects & Work
+			</h3>
+			<div
+				class="grid sm:grid-cols-2 md:grid-cols-3 gap-3 w-full justify-center mt-4"
+			>
+				{
+					data.map((project) => (
+						<div class="relative p-2 dark:bg-slate-800 bg-slate-300 shadow-sm shadow-slate-400 dark:shadow-slate-600 rounded-lg transition ease-in-out duration-300 hover:scale-105">
+							<div class="mx-2 mt-2 mb-16 absolute inset-0 flex flex-wrap items-center justify-center opacity-0 hover:opacity-100 transition duration-300 hover:bg-[#000000d7] rounded-md">
+								{project.skills.map((skill) => (
+									<img
+										class="object-contain h-8"
+										width="50"
+										height="50"
+										src={`/skills/${skill.toLocaleLowerCase()}.svg`}
+										alt={skill}
+									/>
+								))}
+							</div>
+							<div>
+								{project.job ? (
+									<div class="absolute top-0 right-0 p-1 bg-[#000000d7] rounded-bl-md rounded-tr-md">
+										💼
+									</div>
+								) : (
+									<div class="absolute top-0 right-0 p-1 bg-[#000000d7] rounded-bl-md rounded-tr-md">
+										🚀
+									</div>
+								)}
+								<img
+									class="h-auto object-contain rounded-md"
+									src={project.image}
+									alt={project.name}
+									width="450px"
+								/>
+								<div class="flex w-full justify-between mt-8">
+									<h4 class="font-bold">{project.name}</h4>
+									<a
+										class="font-medium"
+										href={project.demo}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										Demo
+									</a>
+								</div>
+							</div>
+						</div>
+					))
+				}
+			</div>
+			<h4 class="my-2 mt-4 text-sm">
+				*The briefcase emoji indicates a job, while the rocket emoji indicates a
+				personal project
+			</h4>
+		</article>
+	</div>
 </section>

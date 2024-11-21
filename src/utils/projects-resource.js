@@ -20,8 +20,6 @@ export const data = [
 			"Express",
 			"Sequelize",
 			"PostgreSQL",
-			"Firebase",
-			"Cloudinary",
 		],
 		job: true,
 	},

@@ -3,7 +3,14 @@ import { experiences } from '../utils/content'
 ---
 
 <section id="experience" class="w-full space-y-8">
-  <h2>Experience</h2>
+  <header class="space-y-3">
+    <h2 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">Experiencia profesional</h2>
+    <p class="max-w-2xl text-sm text-slate-600 dark:text-slate-300 md:text-base">
+      Combino trabajo en estudio, proyectos para clientes y mentoría. Cada rol potenció mi habilidad para conectar necesidades de
+      negocio con entregas técnicas claras.
+    </p>
+  </header>
+
   <ol class="relative space-y-10 border-s border-slate-200 ps-6 dark:border-slate-700 md:space-y-12 md:ps-10">
     {experiences.map((experience) => (
       <li class="relative">
@@ -11,16 +18,14 @@ import { experiences } from '../utils/content'
         <div class="absolute -left-[30px] top-1 grid h-10 w-10 place-items-center rounded-full bg-[#0CA000]/10 text-[#0CA000] shadow-sm shadow-[#0CA000]/30 dark:bg-[#06C300]/15 dark:text-[#06C300] dark:shadow-[#06C300]/30">
           <span aria-hidden="true" class="text-lg">★</span>
         </div>
-        <article class="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm shadow-slate-400/20 transition hover:-translate-y-1 hover:shadow-md hover:shadow-slate-400/30 dark:border-slate-700 dark:bg-slate-900/60 dark:shadow-black/30">
+        <article class="rounded-3xl border border-slate-200 bg-white/80 p-5 shadow-sm shadow-slate-400/20 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-400/30 dark:border-slate-700 dark:bg-slate-900/60 dark:shadow-black/30">
           <header class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
-            <div>
+            <div class="space-y-1">
               <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
                 {experience.role}
                 <span class="text-base font-normal text-slate-500 dark:text-slate-300"> · {experience.company}</span>
               </h3>
-              <p class="text-sm font-medium uppercase tracking-[0.25em] text-[#31633D] dark:text-[#06C300]">
-                {experience.type}
-              </p>
+              <p class="text-sm font-semibold uppercase tracking-[0.35em] text-[#31633D] dark:text-[#06C300]">{experience.type}</p>
             </div>
             <p class="text-sm font-semibold text-slate-500 dark:text-slate-300 md:text-right">
               {experience.period}
@@ -43,9 +48,9 @@ import { experiences } from '../utils/content'
 
   <div class="grid place-items-center">
     <div class="flex flex-col items-center gap-4 rounded-3xl border border-dashed border-[#0CA000]/60 bg-white/70 p-6 text-center shadow-sm shadow-[#0CA000]/20 dark:border-[#06C300]/60 dark:bg-slate-900/60 dark:shadow-[#06C300]/20">
-      <p class="text-lg font-semibold text-slate-800 dark:text-slate-100">Curious about the full story?</p>
+      <p class="text-lg font-semibold text-slate-800 dark:text-slate-100">¿Querés profundizar en mi trayectoria?</p>
       <p class="max-w-md text-sm text-slate-600 dark:text-slate-300">
-        Download my résumé to explore previous projects, stack preferences and the impact delivered for each engagement.
+        Descargá mi CV para ver resultados detallados, stacks preferidos y recomendaciones de clientes con los que he trabajado.
       </p>
       <a
         href="/Resume.pdf"
@@ -54,7 +59,7 @@ import { experiences } from '../utils/content'
         class="inline-flex items-center gap-2 rounded-full bg-[#0CA000] px-5 py-2 text-sm font-semibold text-slate-950 transition hover:bg-[#0CA000]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:bg-[#06C300] dark:text-slate-900"
       >
         <img src="/icons/arrow.svg" width="20" height="20" alt="" aria-hidden="true" />
-        Download résumé
+        Descargar CV
       </a>
     </div>
   </div>

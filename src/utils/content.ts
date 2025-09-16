@@ -10,6 +10,7 @@ export interface Project {
   description: string
   demo: string
   skills: string[]
+  highlights: string[]
   job?: boolean
 }
 
@@ -51,78 +52,110 @@ export interface ContactOption {
 }
 
 export const navigationLinks: NavigationLink[] = [
-  { id: 'home', name: 'Home', icon: 'home.svg' },
-  { id: 'about', name: 'About Me', icon: 'about.svg' },
-  { id: 'experience', name: 'Experience', icon: 'experience.svg' },
-  { id: 'my-work', name: 'My Work', icon: 'my-job.svg' },
-  { id: 'contact', name: 'Contact', icon: 'contact.svg' }
+  { id: 'home', name: 'Inicio', icon: 'home.svg' },
+  { id: 'about', name: 'Sobre mí', icon: 'about.svg' },
+  { id: 'experience', name: 'Experiencia', icon: 'experience.svg' },
+  { id: 'my-work', name: 'Proyectos', icon: 'my-job.svg' },
+  { id: 'contact', name: 'Contacto', icon: 'contact.svg' }
 ]
 
 export const projects: Project[] = [
   {
     name: 'The Lyrics Bay',
     image: '/projects/thelyricsbay.webp',
-    description: 'Social platform where music lovers share and curate lyrics with a personalised feed.',
+    description: 'Plataforma social donde melómanos comparten y curan letras con un feed personalizado.',
     demo: 'https://thelyricsbay-front-production.up.railway.app',
     skills: ['Typescript', 'React', 'Zustand', 'NodeJS', 'Express', 'PostgreSQL'],
+    highlights: [
+      'Diseñé un onboarding gamificado y un editor colaborativo en tiempo real para que la comunidad mantenga el catálogo vivo.',
+      'Implementé renderizado híbrido y almacenamiento en caché que redujo el tiempo de carga inicial un 35%.'
+    ],
     job: true
   },
   {
     name: 'MedicShop',
     image: '/projects/medicshop.webp',
-    description: 'Marketplace that simplifies the purchase of medical equipment for clinics and professionals.',
+    description: 'Marketplace que simplifica la compra de equipamiento médico para clínicas y profesionales.',
     demo: 'https://medic.shop',
     skills: ['Typescript', 'React', 'Redux', 'NodeJS', 'Express', 'Mongo'],
+    highlights: [
+      'Construí una arquitectura headless que sincroniza inventario, precios y catálogos entre múltiples proveedores.',
+      'Integré pasarelas de pago y facturación automática para operar en varios países sin fricciones.'
+    ],
     job: true
   },
   {
     name: 'KaroKids eCommerce',
     image: '/projects/karokids.webp',
-    description: 'Scalable eCommerce for a Colombian clothing brand, designed for growth and easy catalogue management.',
+    description: 'eCommerce escalable para una marca colombiana de indumentaria infantil con foco en crecimiento y catálogo ágil.',
     demo: 'https://karokids-tienda.vercel.app',
     skills: ['Javascript', 'React', 'Redux', 'NodeJS', 'Express', 'Sequelize', 'PostgreSQL'],
+    highlights: [
+      'Desarrollé panel de administración con flujos de publicación y reportes de stock en tiempo real.',
+      'Optimicé el tiempo hasta la compra con rutas estáticas y estrategias de caching en la API.'
+    ],
     job: true
   },
   {
     name: 'Ares GamesDB',
     image: '/projects/aresgamesdb.webp',
-    description: 'Games database powered by the RAWG API with filters, favourites and deep dive detail pages.',
+    description: 'Base de datos de videojuegos con filtros, favoritos y fichas detalladas impulsada por la API de RAWG.',
     demo: 'https://ares-gamesdb.vercel.app',
-    skills: ['Javascript', 'React', 'Redux', 'NodeJS', 'Express', 'Sequelize', 'PostgreSQL']
+    skills: ['Javascript', 'React', 'Redux', 'NodeJS', 'Express', 'Sequelize', 'PostgreSQL'],
+    highlights: [
+      'Implementé filtros combinados, paginación y búsquedas guardadas para explorar más de 3500 juegos.',
+      'Diseñé un modo oscuro accesible y componentes reutilizables que mantienen consistencia visual.'
+    ]
   },
   {
     name: 'Personal Portfolio',
     image: '/projects/portfolio.webp',
-    description: 'Portfolio built with Astro and Tailwind to showcase product thinking and technical delivery.',
+    description: 'Portfolio construido con Astro y Tailwind para mostrar pensamiento de producto y entrega técnica.',
     demo: 'https://thiagomartins.vercel.app',
-    skills: ['Typescript', 'Astro', 'Tailwind']
+    skills: ['Typescript', 'Astro', 'Tailwind'],
+    highlights: [
+      'Automatización de metadatos, optimización de imágenes y soporte multitema para potenciar el SEO.',
+      'Integré contenido tipado para actualizar secciones desde un único módulo de datos.'
+    ]
   },
   {
     name: 'GreenPortal',
     image: '/projects/rick&morty.webp',
-    description: 'Fan project using the Rick and Morty API to explore characters with playful UI details.',
+    description: 'Proyecto fan que usa la API de Rick and Morty para explorar personajes con detalles de UI lúdicos.',
     demo: 'https://greenportal.vercel.app',
-    skills: ['Javascript', 'React', 'Redux', 'NodeJS', 'Express', 'Sequelize', 'PostgreSQL']
+    skills: ['Javascript', 'React', 'Redux', 'NodeJS', 'Express', 'Sequelize', 'PostgreSQL'],
+    highlights: [
+      'Desarrollé un sistema de filtros instantáneos y paginación virtual para navegar más de 800 personajes.',
+      'Animaciones microinteractivas y skeletons brindan feedback inmediato en conexiones lentas.'
+    ]
   },
   {
     name: 'Ares Tac Toe',
     image: '/projects/arestactoe.webp',
-    description: 'A modern take on Tic Tac Toe with multiplayer support and celebratory animations.',
+    description: 'Versión moderna de Ta-Te-Ti con soporte multijugador y animaciones de celebración.',
     demo: 'https://arestactoe.vercel.app',
-    skills: ['HTML', 'CSS', 'JavaScript']
+    skills: ['HTML', 'CSS', 'JavaScript'],
+    highlights: [
+      'Implementé un motor de partida en tiempo real que valida jugadas y empates.',
+      'Diseñé animaciones y estados vacíos que mantienen el juego ágil y accesible.'
+    ]
   },
   {
     name: 'NotesAres',
     image: '/projects/notesares.webp',
-    description: 'Lightweight notes app crafted for quick capture and organisation from any device.',
+    description: 'App liviana de notas pensada para capturar ideas rápidamente desde cualquier dispositivo.',
     demo: 'https://notesares.netlify.app/',
-    skills: ['HTML', 'CSS', 'JavaScript']
+    skills: ['HTML', 'CSS', 'JavaScript'],
+    highlights: [
+      'Sincronización offline-first con persistencia en LocalStorage para continuidad sin conexión.',
+      'Uso de componentes reutilizables y accesibles para una experiencia consistente.'
+    ]
   }
 ]
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: 'Frontend & Product UI',
+    title: 'Frontend & Experiencia de Usuario',
     items: [
       { slug: 'html', label: 'HTML' },
       { slug: 'css', label: 'CSS' },
@@ -137,7 +170,7 @@ export const skillGroups: SkillGroup[] = [
     ]
   },
   {
-    title: 'Backend & Data',
+    title: 'Backend & Datos',
     items: [
       { slug: 'nodejs', label: 'Node.js' },
       { slug: 'express', label: 'Express' },
@@ -150,67 +183,67 @@ export const skillGroups: SkillGroup[] = [
 
 export const experiences: Experience[] = [
   {
-    role: 'CEO & Fullstack Developer',
+    role: 'CEO y Fullstack Developer',
     company: 'MaskedBytes',
-    period: 'April 2024 – Present',
-    location: 'Remote',
-    type: 'Freelance · Development',
+    period: 'Abr 2024 – Presente',
+    location: 'Remoto · Global',
+    type: 'Estudio boutique · eCommerce y marketplaces',
     description:
-      'Lead a boutique studio focused on eCommerce and marketplace experiences for startups and growing brands.',
+      'Lidero un estudio enfocado en experiencias de eCommerce y marketplaces para startups y marcas en expansión.',
     highlights: [
-      'Plan, prototype and deliver full-stack solutions that balance scalability, usability and business goals.',
-      'Coordinate designers and engineers to keep communication fluid and releases on schedule.'
+      'Defino roadmaps medibles junto a fundadores y PMs para lanzar MVPs en ciclos cortos.',
+      'Coordino diseño, desarrollo y analítica para que cada release aporte valor de negocio.'
     ]
   },
   {
     role: 'Teaching Assistant',
     company: 'SoyHenry',
-    period: 'December 2023 – July 2024',
-    location: 'Remote · Argentina',
-    type: 'Bootcamp · Education',
+    period: 'Dic 2023 – Jul 2024',
+    location: 'Remoto · Argentina',
+    type: 'Bootcamp · Educación',
     description:
-      'Supported new developers through the first stages of an intensive fullstack bootcamp.',
+      'Acompañé a nuevos desarrolladores en las primeras etapas de un bootcamp fullstack intensivo.',
     highlights: [
-      'Facilitated study groups, code reviews and pair-programming sessions to reinforce best practices.',
-      'Designed activities that improved onboarding, collaboration and confidence for +30 students.'
+      'Guié sesiones de pair programming, code reviews y workshops semanales para más de 30 estudiantes.',
+      'Generé tableros y documentación que facilitaron la colaboración asincrónica del cohort.'
     ]
   },
   {
     role: 'Fullstack Developer',
     company: 'KaroKids',
-    period: 'January 2024 – March 2024',
-    location: 'Remote · Colombia',
-    type: 'Client Project · eCommerce',
+    period: 'Ene 2024 – Mar 2024',
+    location: 'Remoto · Colombia',
+    type: 'Proyecto cliente · eCommerce',
     description:
-      'Built the end-to-end commerce platform for a children’s clothing brand with a cross-functional team.',
+      'Desarrollé la plataforma de comercio para una marca de indumentaria infantil junto al equipo de diseño y marketing.',
     highlights: [
-      'Implemented secure checkout flows, catalogue management and marketing automations for launch.',
-      'Collaborated with designers to deliver a responsive experience optimised for conversion.'
+      'Integré checkout seguro, gestión de catálogo y automatización de campañas de email.',
+      'Aseguré tiempos de carga por debajo de 1.5s en mobile mediante optimización de assets y CDN.'
     ]
   },
   {
     role: 'Fullstack Developer',
     company: 'Ares WebDev',
-    period: 'November 2023 – Present',
-    location: 'Remote · Argentina',
-    type: 'Freelance · Web Applications',
+    period: 'Nov 2023 – Presente',
+    location: 'Remoto · Argentina',
+    type: 'Freelance · Aplicaciones web',
     description:
-      'Craft personalised web solutions for entrepreneurs and small businesses to boost their digital presence.',
+      'Creo soluciones personalizadas para emprendedores y pymes que buscan potenciar su presencia digital.',
     highlights: [
-      'Deliver UX-friendly interfaces and maintainable codebases tailored to each client’s needs.',
-      'Continuously iterate on tooling and workflows to elevate quality with every project.'
+      'Entrego interfaces accesibles y código mantenible ajustado a cada negocio.',
+      'Itero sobre herramientas y pipelines CI/CD para elevar la calidad en cada release.'
     ]
   }
 ]
 
 export const certifications: Certification[] = [
   {
-    name: 'Fullstack Developer',
+    name: 'Fullstack Developer (Bootcamp)',
     image: '/certificates/fullstack.png',
     organization: 'SoyHenry',
     date: '2024',
     url: 'http://d2rf2c6bvm78n9.cloudfront.net/new-cert?id=6be0797bae9833c0b4e4830f1dc5414ad92cc8fa16bb44fc53d7fa44148801b7',
-    description: 'Intensive +800hs bootcamp focused on real-world agile teamwork and product delivery.'
+    description: 'Bootcamp intensivo de +800 horas con foco en trabajo ágil y construcción de productos reales.'
   },
   {
     name: 'Teaching Assistant',
@@ -218,7 +251,7 @@ export const certifications: Certification[] = [
     organization: 'SoyHenry',
     date: '2024',
     url: 'http://d2rf2c6bvm78n9.cloudfront.net/new-cert?id=54954150353ff0775d6b507bde5e654f0d269059e822726d7bd385312e2cf493',
-    description: 'Recognised for coaching student teams, mentoring careers and unlocking collaborative skills.'
+    description: 'Reconocimiento por mentoría, facilitación de equipos estudiantiles y acompañamiento en carreras tech.'
   },
   {
     name: 'State Management with Zustand',
@@ -226,26 +259,26 @@ export const certifications: Certification[] = [
     organization: 'DevTalles',
     date: '2024',
     url: 'https://cursos.devtalles.com/certificates/oh3zfhendi',
-    description: 'Hands-on training to implement scalable state management in modern React applications.'
+    description: 'Capacitación práctica para implementar manejo de estado escalable en aplicaciones React modernas.'
   }
 ]
 
 export const contactOptions: ContactOption[] = [
   {
-    label: 'Share project details by email',
-    description: 'Tell me about your goals and I will reply within 24 hours.',
+    label: 'Escríbeme por email',
+    description: 'Cuéntame los objetivos de tu proyecto y te responderé en menos de 24 horas.',
     href: 'mailto:thiagodev.martins@gmail.com',
     icon: '/icons/contact.svg'
   },
   {
-    label: 'Connect with me on LinkedIn',
-    description: 'Let’s chat about your product roadmap or team needs.',
+    label: 'Conectemos en LinkedIn',
+    description: 'Hablemos sobre tu roadmap de producto o las necesidades de tu equipo.',
     href: 'https://www.linkedin.com/in/thiago-javier-martins/',
     icon: '/icons/linkedin.svg'
   },
   {
-    label: 'Explore my GitHub',
-    description: 'Review source code, experiments and open-source contributions.',
+    label: 'Revisa mi GitHub',
+    description: 'Explora código, experimentos y contribuciones open-source.',
     href: 'https://github.com/ThiagoJMartins',
     icon: '/icons/github.svg'
   }

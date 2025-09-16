@@ -1,6 +1,7 @@
 ---
 import '@fontsource/fira-code'
 import Header from '../components/Header.astro'
+
 interface Props {
   title: string
 }
@@ -9,103 +10,157 @@ const { title } = Astro.props
 ---
 
 <!doctype html>
-<html lang="es" class="">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta
       name="description"
-      content="Portfolio of Thiago Martins, Fullstack Developer with experience in JavaScript, React, Astro, NextJS, TailwindCSS, NodeJS, among other related technologies"
+      content="Portfolio of Thiago Martins, fullstack developer specialised in building eCommerce, SaaS products and modern web platforms."
     />
     <meta name="viewport" content="width=device-width" />
+    <meta name="author" content="Thiago Martins" />
+    <meta name="keywords" content="Thiago Martins, fullstack developer, JavaScript, React, Astro, Next.js, Node.js, Tailwind CSS" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" as="image" href="/Photo.webp" fetchpriority="high" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0CA000" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
     <title>{title}</title>
+    <link rel="canonical" href="https://thiagomartins.vercel.app/" />
     <meta property="og:title" content={title} />
     <meta
       property="og:description"
-      content="Portfolio of Thiago Martins, Fullstack Developer with experience in JavaScript, React, Astro, NextJS, TailwindCSS, NodeJS, among other related technologies"
+      content="Portfolio of Thiago Martins, fullstack developer specialised in building eCommerce, SaaS products and modern web platforms."
     />
-    <meta property="og:site_name" content="David.dev" />
+    <meta property="og:site_name" content="Thiago Martins" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://thiagomartins.vercel.app/" />
     <meta property="og:image" content="/open-graph-image.png" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta
+      name="twitter:description"
+      content="Portfolio of Thiago Martins, fullstack developer specialised in building eCommerce, SaaS products and modern web platforms."
+    />
+    <meta name="twitter:image" content="/open-graph-image.png" />
   </head>
   <body
-    class="bg-bgLight text-[#3d3d3d] dark:bg-bgDark px-3 md:px-6 pb-5 dark:text-white w-full max-w-[1080px] m-auto">
-    <Header />
-    <main class="flex flex-col gap-14">
-      <slot />
-    </main>
+    class="flex min-h-screen flex-col bg-gradient-to-br from-[#f4f7f5] via-bgLight to-white px-3 pb-12 text-slate-800 transition-colors duration-300 dark:from-[#0b1221] dark:via-bgDark dark:to-[#05080f] dark:text-slate-100 sm:px-6"
+  >
+    <a
+      href="#main-content"
+      class="sr-only focus-visible:fixed focus-visible:left-1/2 focus-visible:top-4 focus-visible:z-50 focus-visible:-translate-x-1/2 focus-visible:rounded-full focus-visible:bg-[#0CA000] focus-visible:px-5 focus-visible:py-3 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-slate-900"
+    >
+      Skip to content
+    </a>
+    <div class="mx-auto flex w-full max-w-[1100px] flex-1 flex-col gap-10">
+      <Header />
+      <main id="main-content" class="flex flex-1 flex-col gap-16">
+        <slot />
+      </main>
+    </div>
   </body>
 </html>
 <style is:global>
+  :root {
+    color-scheme: light dark;
+  }
+
   html {
-    font-family: sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     scroll-behavior: smooth;
+    background-color: transparent;
+  }
+
+  body {
+    margin: 0;
   }
 
   #footer,
   .logo {
-    font-family: 'Fira Code', sans-serif;
+    font-family: 'Fira Code', monospace;
   }
 
   h2 {
-    font-size: 40px;
-    line-height: 36px;
-    font-weight: 700;
+    font-size: clamp(2.2rem, 3vw + 1rem, 3.2rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: inherit;
   }
 
   h3 {
-    font-size: 20px;
+    font-size: clamp(1.4rem, 2.5vw + 0.6rem, 1.75rem);
+    font-weight: 700;
+    color: inherit;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 </style>
 <script is:inline>
-  const theme = (() => {
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+  const getStoredTheme = () => {
+    try {
       return localStorage.getItem('theme')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark'
-    } else return 'light'
-  })()
+    } catch (error) {
+      return null
+    }
+  }
 
+  const html = document.documentElement
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
   const lightButton = document.getElementById('theme-light')
   const darkButton = document.getElementById('theme-dark')
 
-  if (theme === 'light') {
-    if (!darkButton.hasAttribute('hidden')) {
-      darkButton.toggleAttribute('hidden')
-      lightButton.toggleAttribute('hidden')
+  const applyTheme = (theme) => {
+    if (theme === 'dark') {
+      html.classList.add('dark')
+      lightButton?.removeAttribute('hidden')
+      darkButton?.setAttribute('hidden', '')
+    } else {
+      html.classList.remove('dark')
+      darkButton?.removeAttribute('hidden')
+      lightButton?.setAttribute('hidden', '')
     }
-    document.documentElement.classList.remove('dark')
-  } else {
-    if (!lightButton.hasAttribute('hidden')) {
-      darkButton.toggleAttribute('hidden')
-      lightButton.toggleAttribute('hidden')
-    }
-    document.documentElement.classList.add('dark')
   }
-  localStorage.setItem('theme', theme)
 
-  // Evento Click al botón theme
-  darkButton.addEventListener('click', () => {
-    if (localStorage.getItem('theme') === 'dark') {
-      document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
-      darkButton.toggleAttribute('hidden')
-      lightButton.toggleAttribute('hidden')
+  const setTheme = (theme) => {
+    applyTheme(theme)
+    try {
+      localStorage.setItem('theme', theme)
+    } catch (error) {
+      /* noop */
+    }
+  }
+
+  const initialTheme = getStoredTheme() ?? (mediaQuery.matches ? 'dark' : 'light')
+  applyTheme(initialTheme)
+
+  darkButton?.addEventListener('click', () => setTheme('light'))
+  lightButton?.addEventListener('click', () => setTheme('dark'))
+
+  mediaQuery.addEventListener('change', (event) => {
+    if (!getStoredTheme()) {
+      setTheme(event.matches ? 'dark' : 'light')
     }
   })
-  lightButton.addEventListener('click', () => {
-    if (localStorage.getItem('theme') !== 'dark') {
-      document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
-      darkButton.toggleAttribute('hidden')
-      lightButton.toggleAttribute('hidden')
+
+  window.addEventListener('pagehide', (event) => {
+    if (event.persisted) {
+      try {
+        localStorage.removeItem('theme')
+      } catch (error) {
+        /* noop */
+      }
     }
   })
-
-  const eventFunction = (event) => {
-    if (event.persisted) localStorage.removeItem('theme')
-  }
-  window.addEventListener('pagehide', eventFunction)
 </script>

@@ -51,7 +51,14 @@ const stats = [
           href="mailto:thiagodev.martins@gmail.com"
           class="inline-flex items-center gap-2 rounded-full bg-[#0CA000] px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-[#0CA000]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:bg-[#06C300] dark:text-slate-900"
         >
-          <img src="/icons/contact.svg" width="22" height="22" alt="" aria-hidden="true" />
+          <img
+            src="/icons/contact.svg"
+            width="22"
+            height="22"
+            alt=""
+            aria-hidden="true"
+            class="h-5 w-5 dark:brightness-200 dark:invert"
+          />
           Hablemos de tu proyecto
         </a>
         <a
@@ -89,7 +96,14 @@ const stats = [
               rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
               class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white/80 text-slate-700 transition hover:border-[#0CA000] hover:text-[#0CA000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:border-slate-600 dark:bg-slate-800/70 dark:text-slate-200 dark:hover:border-[#06C300] dark:hover:text-[#06C300]"
             >
-              <img src={link.icon} width="20" height="20" alt="" aria-hidden="true" />
+              <img
+                src={link.icon}
+                width="20"
+                height="20"
+                alt=""
+                aria-hidden="true"
+                class="h-5 w-5 dark:brightness-200 dark:invert"
+              />
               <span class="sr-only">{link.label}</span>
             </a>
           ))}

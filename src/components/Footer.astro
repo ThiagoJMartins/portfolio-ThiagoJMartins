@@ -27,15 +27,15 @@ const year = new Date().getFullYear()
         rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
         class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition hover:border-[#0CA000] hover:text-[#0CA000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:border-slate-600 dark:text-slate-300 dark:hover:border-[#06C300] dark:hover:text-[#06C300]"
       >
-        <img src={link.icon} alt="" aria-hidden="true" class="h-5 w-5" />
+        <img src={link.icon} alt="" aria-hidden="true" class="h-5 w-5 dark:brightness-200 dark:invert" />
         <span class="sr-only">{link.label}</span>
       </a>
     ))}
   </div>
 
   <p class="mx-auto max-w-2xl text-slate-600 dark:text-slate-300">
-    “Every great developer you know got there by solving problems they were unqualified to solve until they actually did it.” —
-    Patrick McKenzie
+    “Todo gran desarrollador llegó ahí resolviendo problemas para los que no estaba preparado... hasta que lo estuvo.” — Patrick
+    McKenzie
   </p>
-  <p class="text-slate-400 dark:text-slate-500">© {year} Thiago Martins. Crafted with Astro & TailwindCSS.</p>
+  <p class="text-slate-400 dark:text-slate-500">© {year} Thiago Martins. Creado con Astro & Tailwind CSS.</p>
 </footer>

@@ -1,151 +1,187 @@
 ---
-const skills = [
-	["html", "HTML"],
-	["css", "CSS"],
-	["javascript", "JavaScript"],
-	["typescript", "TypeScript"],
-	["nodejs", "NodeJS"],
-	["express", "Express"],
-	["react", "React"],
-	["astro", "Astro"],
-	["next", "NextJS"],
-	["tailwind", "Tailwind"],
-	["redux", "Redux"],
-	["zustand", "Zustand"],
-	["sequelize", "Sequelize"],
-	["postgresql", "PostgreSQL"],
-	["mongo", "MongoDB"],
-];
+import { certifications, projects, skillGroups } from '../utils/content'
 
-import { certifications } from "../utils/certifications-paths.js";
+const projectBadge = (isClient?: boolean) => (isClient ? 'Proyecto cliente' : 'Proyecto personal')
+const projectBadgeColor = (isClient?: boolean) =>
+  isClient
+    ? 'border border-[#0CA000]/40 bg-white/90 text-[#0CA000] dark:border-[#06C300]/40 dark:bg-slate-900/80 dark:text-[#06C300]'
+    : 'border border-[#31633D]/40 bg-white/90 text-[#31633D] dark:border-[#06C300]/30 dark:bg-slate-900/80 dark:text-[#06C300]'
 
-import { data } from "../utils/projects-resource.js";
+const sortedProjects = [...projects].sort((a, b) => Number(b.job ?? false) - Number(a.job ?? false))
+
+const serviceKits = [
+  {
+    title: 'Sprint de discovery (2 semanas)',
+    description:
+      'Ideal para validar ideas o redefinir un producto. Construimos claridad sobre el problema, medimos oportunidades y trazamos un plan accionable.',
+    deliverables: ['Workshop de kickoff', 'Mapa de usuarios y journeys', 'Prototipo navegable', 'Backlog priorizado']
+  },
+  {
+    title: 'Desarrollo end-to-end',
+    description:
+      'Trabajamos juntos desde la arquitectura hasta la puesta en producción. Perfecto para MVPs o nuevos módulos críticos.',
+    deliverables: ['Arquitectura y set-up del stack', 'Componentes UI reutilizables', 'Integraciones con APIs externas', 'Pipeline de despliegue y monitoreo']
+  },
+  {
+    title: 'Optimización continua',
+    description:
+      'Acompañamiento mensual para escalar funcionalidades existentes, mejorar métricas clave y mantener una base de código sana.',
+    deliverables: ['Auditoría técnica inicial', 'Roadmap de optimizaciones', 'Implementación iterativa', 'Reportes con métricas y aprendizajes']
+  }
+]
 ---
 
-<section id="my-job" class="">
-	<h2>My Work</h2>
-	<div class="flex flex-col-reverse mt-4 gap-10">
-		<article class="flex flex-col w-full">
-			<h3
-				class="text-2xl font-bold text-center mx-auto dark:text-[#06C300] text-[#31633D]"
-			>
-				Certifications
-			</h3>
-			<div class="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 px-4 md:px-14">
-				{
-					certifications.map((certification) => (
-						<div class="flex flex-col items-center rounded-lg bg-slate-800 dark:bg-slate-700 shadow-lg p-4 transition-transform ease-in-out hover:-translate-y-2 hover:scale-105 duration-300">
-							<a
-								href={certification.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="w-full"
-							>
-								<img
-									class="w-full max-h-[200px] object-contain rounded-md"
-									src={certification.image}
-									alt={certification.name}
-								/>
-							</a>
-							<div class="mt-4 text-center">
-								<span class="block text-lg font-semibold text-slate-200 dark:text-slate-100">
-									{certification.name}
-								</span>
-								<span class="block text-sm font-medium text-slate-400 dark:text-slate-300">
-									{certification.date}
-								</span>
-								<span class="block text-sm font-medium text-slate-400 dark:text-slate-300">
-									{certification.organization}
-								</span>
-							</div>
-						</div>
-					))
-				}
-			</div>
-		</article>
+<section id="my-work" class="w-full space-y-12">
+  <header class="space-y-3">
+    <h2 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">Mi trabajo</h2>
+    <p class="max-w-3xl text-sm text-slate-600 dark:text-slate-300 md:text-base">
+      Diseño y desarrollo productos digitales end-to-end. Aquí encontrarás una selección de proyectos, tecnologías y dinámicas de
+      trabajo que representan mi enfoque.
+    </p>
+  </header>
+  <article class="space-y-6">
+    <header class="flex flex-col gap-2">
+      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">Proyectos destacados</h3>
+      <p class="max-w-3xl text-sm text-slate-600 dark:text-slate-300 md:text-base">
+        Una combinación de colaboraciones con clientes y proyectos personales donde lideré discovery, arquitectura y entrega. Cada
+        caso refleja cómo conecto negocio, diseño y tecnología.
+      </p>
+    </header>
+    <div class="grid gap-6">
+      {sortedProjects.map((project) => (
+        <article class="group grid overflow-hidden rounded-[28px] border border-slate-200 bg-white/85 shadow-sm shadow-slate-400/20 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-400/40 dark:border-slate-700 dark:bg-slate-900/60 dark:shadow-black/30 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+          <div class="relative h-full">
+            <img
+              src={project.image}
+              alt={project.name}
+              width="640"
+              height="480"
+              class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+              loading="lazy"
+            />
+            <span class={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] shadow-sm shadow-black/20 ${projectBadgeColor(project.job)}`}>
+              {projectBadge(project.job)}
+            </span>
+          </div>
+          <div class="flex flex-col gap-4 p-6">
+            <div class="flex flex-col gap-2">
+              <h4 class="text-xl font-semibold text-slate-900 dark:text-white">{project.name}</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-300 md:text-base">{project.description}</p>
+            </div>
+            <ul class="grid gap-2 text-sm text-slate-600 dark:text-slate-300">
+              {project.highlights.map((highlight) => (
+                <li class="flex items-start gap-2">
+                  <span aria-hidden="true" class="mt-1 inline-flex h-2 w-2 shrink-0 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></span>
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
+            <div class="flex flex-wrap gap-2 text-xs text-slate-600 dark:text-slate-300">
+              {project.skills.map((skill) => (
+                <span class="rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800">{skill}</span>
+              ))}
+            </div>
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 text-sm font-semibold text-[#31633D] transition hover:text-[#0CA000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:text-[#06C300] dark:hover:text-white"
+            >
+              Ver proyecto
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </article>
 
-		<article class="flex flex-col w-full">
-			<h3 class="dark:text-[#06C300] text-[#31633D] text-2xl font-bold mx-auto">
-				Skills
-			</h3>
-			<div
-				class="grid grid-cols-3 gap-4 w-full md:flex md:flex-wrap md:justify-center md:gap-4 mt-6 md:px-14"
-			>
-				{
-					skills.map((skill) => (
-						<div class="grid place-items-center rounded-lg bg-slate-800 dark:bg-slate-700 gap-3 p-1 px-2 transition ease-in-out hover:-translate-y-1 hover:scale-115 duration-300">
-							<img
-								class="object-contain h-8 justify-start"
-								width="70"
-								height="70"
-								src={`/skills/${skill[0]}.svg`}
-								alt={skill[1]}
-							/>
-							<span class="font-semibold text-slate-400 dark:text-slate-300">
-								{skill[1]}
-							</span>
-						</div>
-					))
-				}
-			</div>
-		</article>
-		<article class="flex flex-col w-full">
-			<h3 class="dark:text-[#06C300] text-[#31633D] text-2xl font-bold mx-auto">
-				Projects & Work
-			</h3>
-			<div
-				class="grid sm:grid-cols-2 md:grid-cols-3 gap-3 w-full justify-center mt-4"
-			>
-				{
-					data.map((project) => (
-						<div class="relative p-2 dark:bg-slate-800 bg-slate-300 shadow-sm shadow-slate-400 dark:shadow-slate-600 rounded-lg transition ease-in-out duration-300 hover:scale-105">
-							<div class="mx-2 mt-2 mb-16 absolute inset-0 flex flex-wrap items-center justify-center opacity-0 hover:opacity-100 transition duration-300 hover:bg-[#000000d7] rounded-md">
-								{project.skills.map((skill) => (
-									<img
-										class="object-contain h-8"
-										width="50"
-										height="50"
-										src={`/skills/${skill.toLocaleLowerCase()}.svg`}
-										alt={skill}
-									/>
-								))}
-							</div>
-							<div>
-								{project.job ? (
-									<div class="absolute top-0 right-0 p-1 bg-[#000000d7] rounded-bl-md rounded-tr-md">
-										💼
-									</div>
-								) : (
-									<div class="absolute top-0 right-0 p-1 bg-[#000000d7] rounded-bl-md rounded-tr-md">
-										🚀
-									</div>
-								)}
-								<img
-									class="h-auto object-contain rounded-md"
-									src={project.image}
-									alt={project.name}
-									width="450px"
-								/>
-								<div class="flex w-full justify-between mt-8">
-									<h4 class="font-bold">{project.name}</h4>
-									<a
-										class="font-medium"
-										href={project.demo}
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										Demo
-									</a>
-								</div>
-							</div>
-						</div>
-					))
-				}
-			</div>
-			<h4 class="my-2 mt-4 text-sm">
-				*The briefcase emoji indicates a job, while the rocket emoji indicates a
-				personal project
-			</h4>
-		</article>
-	</div>
+  <article class="space-y-6">
+    <header class="flex flex-col gap-2">
+      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">Tecnologías y herramientas</h3>
+      <p class="text-sm text-slate-600 dark:text-slate-300 md:text-base">
+        Esta es la base con la que construyo productos confiables y adaptables. Selecciono cada pieza según el contexto del
+        proyecto, priorizando mantenibilidad y performance.
+      </p>
+    </header>
+    <div class="grid gap-5 md:grid-cols-2">
+      {skillGroups.map((group) => (
+        <div class="rounded-3xl border border-slate-200 bg-white/80 p-5 shadow-sm shadow-slate-400/20 dark:border-slate-700 dark:bg-slate-900/60 dark:shadow-black/30">
+          <h4 class="text-lg font-semibold text-slate-900 dark:text-white">{group.title}</h4>
+          <ul class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {group.items.map((skill) => (
+              <li class="flex items-center gap-3 rounded-2xl bg-white/70 p-3 text-sm font-medium text-slate-600 shadow-sm shadow-slate-200/60 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-300/40 dark:bg-slate-900/60 dark:text-slate-200 dark:shadow-black/30">
+                <img src={`/skills/${skill.slug}.svg`} alt="" aria-hidden="true" class="h-7 w-7" />
+                <span>{skill.label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </article>
+
+  <article class="space-y-6">
+    <header class="flex flex-col gap-2">
+      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">Formas de colaborar</h3>
+      <p class="text-sm text-slate-600 dark:text-slate-300 md:text-base">
+        Podés sumarme por proyecto, por un sprint puntual o como partner continuo. Estas son algunas propuestas para comenzar a
+        trabajar juntos.
+      </p>
+    </header>
+    <div class="grid gap-6 md:grid-cols-3">
+      {serviceKits.map((kit) => (
+        <div class="flex h-full flex-col gap-4 rounded-3xl border border-dashed border-[#31633D]/40 bg-white/75 p-5 text-sm text-slate-600 shadow-sm shadow-[#31633D]/15 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-[#31633D]/20 dark:border-[#06C300]/40 dark:bg-slate-900/60 dark:text-slate-300 dark:shadow-[#06C300]/15">
+          <div>
+            <h4 class="text-lg font-semibold text-slate-900 dark:text-white">{kit.title}</h4>
+            <p class="mt-3">{kit.description}</p>
+          </div>
+          <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            {kit.deliverables.map((item) => (
+              <li class="flex items-start gap-2 rounded-2xl bg-white/70 px-3 py-2 dark:bg-slate-900/70">
+                <span aria-hidden="true" class="mt-[6px] inline-flex h-1.5 w-1.5 shrink-0 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></span>
+                <span class="text-sm font-medium text-slate-600 dark:text-slate-200">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </article>
+
+  <article class="space-y-6">
+    <header class="flex flex-col gap-2">
+      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">Certificaciones & aprendizaje continuo</h3>
+      <p class="text-sm text-slate-600 dark:text-slate-300 md:text-base">
+        Me mantengo actualizado con formaciones que potencian mi capacidad de guiar equipos y tomar decisiones técnicas bien
+        fundamentadas.
+      </p>
+    </header>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {certifications.map((certification) => (
+        <a
+          href={certification.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white/80 p-5 text-left shadow-sm shadow-slate-400/20 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-400/40 dark:border-slate-700 dark:bg-slate-900/60 dark:shadow-black/30"
+        >
+          <img
+            src={certification.image}
+            alt={certification.name}
+            width="480"
+            height="320"
+            class="h-40 w-full rounded-2xl bg-white/80 object-contain p-4 transition duration-300 group-hover:scale-[1.02]"
+            loading="lazy"
+          />
+          <div class="mt-5 flex flex-col gap-2">
+            <span class="text-lg font-semibold text-slate-900 dark:text-white">{certification.name}</span>
+            <span class="text-sm font-medium text-slate-500 dark:text-slate-300">{certification.organization} · {certification.date}</span>
+            {certification.description && (
+              <p class="text-sm text-slate-600 dark:text-slate-300">{certification.description}</p>
+            )}
+          </div>
+        </a>
+      ))}
+    </div>
+  </article>
 </section>

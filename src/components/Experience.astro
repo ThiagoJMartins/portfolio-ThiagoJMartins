@@ -1,66 +1,66 @@
-<section id="experience" class="">
-  <h2>Experience</h2>
-  <article class="flex pl-3 md:pl-10 gap-3 md:gap-7 mt-5">
-    <div class="dark:bg-[#06C300] bg-[#31633D] text-firstLight">.</div>
-   <div class="flex flex-col">
-      <h3><span class="font-semibold">CEO</span> - MaskedBytes.</h3>
-      <i>April 2024 – Present. [Development] [Remote] [Freelance]</i>
-      <p>
-        • CEO of a small company dedicated to the development of web and mobile applications, specialized in eCommerces and Marketplaces. <br>
-        • I am in charge of the management of the company, the development of the projects, and the search for new clients. <br>
-      </p>
-    </div>
-  </article>
- <article class="flex pl-3 md:pl-10 gap-3 md:gap-7 mt-5">
-    <div class="dark:bg-[#06C300] bg-[#31633D] text-firstLight">.</div>
-    <div class="flex flex-col">
-      <h3><span class="font-semibold">Teaching Assistant</span> - SoyHenry.</h3>
-      <i>December 2023 – July 2024. [Argentina] [Remote] [Bootcamp]</i>
-      <p>
-        • Coordinate a group of students to achieve integration to the study group. <br>
-        • Guide students in the first steps of the course <br>
-        • Assist to solve exercises and promote group collaboration (Pair Programming) <br>
-        • Propose ideas to improve the Bootcamp processes
-      </p>
-    </div>
-  </article>
-  <article class="flex pl-3 md:pl-10 gap-3 md:gap-7 mt-5">
-    <div class="dark:bg-[#06C300] bg-[#31633D] text-firstLight">.</div>
-    <div class="flex flex-col">
-      <h3><span class="font-semibold">Fullstack Developer</span> - KaroKids.</h3>
-      <i>January 2024 – March 2024. [Colombia] [Remote] [eCommerce]</i>
-      <p>
-        I am dedicated to the development of an eCommerce for a renowned children's clothing store in Colombia, working closely with a multidisciplinary team to provide customers with an exceptional shopping experience. From frontend design and development to backend implementation, I am responsible for creating a secure, efficient and highly functional platform, driving the growth and success of the online store in the competitive digital market.
-      </p>
-    </div>
-  </article>
-  <article class="flex pl-3 md:pl-10 gap-3 md:gap-7 mt-5">
-    <div class="dark:bg-[#06C300] bg-[#31633D] text-firstLight">.</div>
-    <div class="flex flex-col">
-      <h3><span class="font-semibold">Fullstack Development</span> - Ares WebDev.</h3>
-      <i>November 2023 – Present. [Argentina] [Remote] [Freelance]</i>
-      <p>
-        Carrying out web application projects and designs on a Freelance basis for personal projectors and simple jobs in order to improve practice and gain experience
-      </p>
-    </div>
-  </article>
+---
+import { experiences } from '../utils/content'
+---
 
-  <article class="max-w-full grid place-items-center mt-7">
-    <div
-      class="flex items-center border dark:border-[#06C300] border-[#31633D] gap-4 md:gap-8 justify-center p-3 px-4 max-w-full rounded-md">
-      <p class="font-semibold text-md w-fit md:text-xl">Take a look at my resume 💼</p>
-      <img width="28px" src="../icons/arrow.svg" alt="Resume Arrow"/>
+<section id="experience" class="w-full space-y-8">
+  <header class="space-y-3">
+    <h2 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">Experiencia profesional</h2>
+    <p class="max-w-2xl text-sm text-slate-600 dark:text-slate-300 md:text-base">
+      Combino trabajo en estudio, proyectos para clientes y mentoría. Cada rol potenció mi habilidad para conectar necesidades de
+      negocio con entregas técnicas claras.
+    </p>
+  </header>
+
+  <ol class="relative space-y-10 border-s border-slate-200 ps-6 dark:border-slate-700 md:space-y-12 md:ps-10">
+    {experiences.map((experience) => (
+      <li class="relative">
+        <div class="absolute -left-[26px] top-0 hidden h-full w-[1px] bg-gradient-to-b from-[#0CA000]/0 via-[#0CA000]/60 to-transparent dark:via-[#06C300]/70 md:block"></div>
+        <div class="absolute -left-[30px] top-1 grid h-10 w-10 place-items-center rounded-full bg-[#0CA000]/10 text-[#0CA000] shadow-sm shadow-[#0CA000]/30 dark:bg-[#06C300]/15 dark:text-[#06C300] dark:shadow-[#06C300]/30">
+          <span aria-hidden="true" class="text-lg">★</span>
+        </div>
+        <article class="rounded-3xl border border-slate-200 bg-white/80 p-5 shadow-sm shadow-slate-400/20 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-400/30 dark:border-slate-700 dark:bg-slate-900/60 dark:shadow-black/30">
+          <header class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+            <div class="space-y-1">
+              <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
+                {experience.role}
+                <span class="text-base font-normal text-slate-500 dark:text-slate-300"> · {experience.company}</span>
+              </h3>
+              <p class="text-sm font-semibold uppercase tracking-[0.35em] text-[#31633D] dark:text-[#06C300]">{experience.type}</p>
+            </div>
+            <p class="text-sm font-semibold text-slate-500 dark:text-slate-300 md:text-right">
+              {experience.period}
+              <span class="block text-xs font-normal text-slate-400 dark:text-slate-500">{experience.location}</span>
+            </p>
+          </header>
+          <p class="mt-4 text-sm text-slate-600 dark:text-slate-300 md:text-base">{experience.description}</p>
+          <ul class="mt-4 grid gap-2 text-sm text-slate-600 dark:text-slate-300 md:text-base">
+            {experience.highlights.map((highlight) => (
+              <li class="flex items-start gap-2">
+                <span aria-hidden="true" class="mt-1 inline-block h-2 w-2 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></span>
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </li>
+    ))}
+  </ol>
+
+  <div class="grid place-items-center">
+    <div class="flex flex-col items-center gap-4 rounded-3xl border border-dashed border-[#0CA000]/60 bg-white/70 p-6 text-center shadow-sm shadow-[#0CA000]/20 dark:border-[#06C300]/60 dark:bg-slate-900/60 dark:shadow-[#06C300]/20">
+      <p class="text-lg font-semibold text-slate-800 dark:text-slate-100">¿Querés profundizar en mi trayectoria?</p>
+      <p class="max-w-md text-sm text-slate-600 dark:text-slate-300">
+        Descargá mi CV para ver resultados detallados, stacks preferidos y recomendaciones de clientes con los que he trabajado.
+      </p>
       <a
         href="/Resume.pdf"
-        target="_blank">
-        <img
-          width="127.52"
-          height="160"
-          class="h-auto object-contain shadow-md dark:shadow-slate-200 dark:shadow-sm transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-150"
-          src="/curriculum.webp"
-          alt="Hoja de vida"
-        />
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-full bg-[#0CA000] px-5 py-2 text-sm font-semibold text-slate-950 transition hover:bg-[#0CA000]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:bg-[#06C300] dark:text-slate-900"
+      >
+        <img src="/icons/arrow.svg" width="20" height="20" alt="" aria-hidden="true" />
+        Descargar CV
       </a>
     </div>
-  </article>
+  </div>
 </section>

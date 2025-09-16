@@ -1,3 +1,41 @@
-<section id="footer" class="w-full grid place-items-center mb-10 text-[10px] text-center md:text-sm md:m-0">
-  <p>"Every great developer you know got there by solving problems they were unqualified to solve until they actually did it." - Patrick McKenzie</p>
-</section>
+---
+import { navigationLinks, socialLinks } from '../utils/content'
+
+const year = new Date().getFullYear()
+---
+
+<footer
+  id="footer"
+  class="w-full space-y-6 border-t border-slate-200 pt-10 text-center text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400 md:text-sm"
+>
+  <nav aria-label="Navegación inferior" class="flex flex-wrap items-center justify-center gap-4 text-sm font-medium">
+    {navigationLinks.map((link) => (
+      <a
+        href={`/#${link.id}`}
+        class="rounded-full px-3 py-1 text-slate-600 transition hover:bg-[#0CA000]/15 hover:text-[#0CA000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:text-slate-300 dark:hover:bg-[#06C300]/15 dark:hover:text-[#06C300]"
+      >
+        {link.name}
+      </a>
+    ))}
+  </nav>
+
+  <div class="flex flex-wrap items-center justify-center gap-3 text-slate-500 dark:text-slate-400">
+    {socialLinks.map((link) => (
+      <a
+        href={link.href}
+        target={link.href.startsWith('http') ? '_blank' : undefined}
+        rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+        class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition hover:border-[#0CA000] hover:text-[#0CA000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:border-slate-600 dark:text-slate-300 dark:hover:border-[#06C300] dark:hover:text-[#06C300]"
+      >
+        <img src={link.icon} alt="" aria-hidden="true" class="h-5 w-5 dark:brightness-200 dark:invert" />
+        <span class="sr-only">{link.label}</span>
+      </a>
+    ))}
+  </div>
+
+  <p class="mx-auto max-w-2xl text-slate-600 dark:text-slate-300">
+    “Todo gran desarrollador llegó ahí resolviendo problemas para los que no estaba preparado... hasta que lo estuvo.” — Patrick
+    McKenzie
+  </p>
+  <p class="text-slate-400 dark:text-slate-500">© {year} Thiago Martins. Creado con Astro & Tailwind CSS.</p>
+</footer>

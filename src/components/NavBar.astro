@@ -1,31 +1,48 @@
 ---
-import { links } from '../utils/projects-resource'
+import { navigationLinks } from '../utils/content'
 ---
 
-<div class="flex items-end">
-  <nav
-    class="flex fixed bottom-0 inset-x-0 w-full lg:hidden p-2 py-2 bg-bgLight dark:bg-bgDark justify-around">
-    {
-      links.map((link) => (
-        <a href={`/#${link.link}`}>
-          <img
-            class="h-8 object-contain bg-slate-300 dark:bg-slate-400 rounded-full p-1"
-            src={`/icons/${link.icon}`}
-            alt={link.name}
-          />
-        </a>
-      ))
-    }
+<div class="flex items-center gap-3">
+  <nav aria-label="Navegación principal" class="hidden text-sm font-semibold lg:flex">
+    <ul class="flex items-center gap-2 rounded-full bg-white/40 px-3 py-1 text-slate-700 backdrop-blur-sm transition dark:bg-white/10 dark:text-slate-200">
+      {
+        navigationLinks.map((link) => (
+          <li>
+            <a
+              href={`/#${link.id}`}
+              class="rounded-full px-4 py-1 transition hover:bg-[#0CA000] hover:text-slate-950 dark:hover:bg-[#06C300]"
+            >
+              {link.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </nav>
-  <nav class="lg:flex justify-center gap-3 w-fit items-end text-sm font-semibold hidden">
-    {
-      links.map((link) => (
-        <a
-          href={`/#${link.link}`}
-          class="hover:bg-[#06C300] hover:bg-opacity-60 dark:hover:bg-[#06C300] dark:hover:bg-opacity-70 p-2 py-[2px] rounded-sm">
-          {link.name}
-        </a>
-      ))
-    }
+
+  <nav
+    aria-label="Navegación móvil"
+    class="fixed inset-x-0 bottom-4 z-50 mx-auto flex w-[min(90%,480px)] justify-around rounded-full border border-slate-200 bg-white/80 p-2 shadow-lg shadow-slate-400/20 backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/80 dark:shadow-black/40 lg:hidden"
+  >
+    <ul class="flex w-full items-center justify-between">
+      {
+        navigationLinks.map((link) => (
+          <li>
+            <a
+              href={`/#${link.id}`}
+              class="flex h-12 w-12 items-center justify-center rounded-full transition hover:bg-[#0CA000]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:hover:bg-[#06C300]/20"
+            >
+              <img
+                src={`/icons/${link.icon}`}
+                alt=""
+                aria-hidden="true"
+                class="h-6 w-6"
+              />
+              <span class="sr-only">{link.name}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </nav>
 </div>

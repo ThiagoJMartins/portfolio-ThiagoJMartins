@@ -134,7 +134,6 @@ const { navigation, basePath } = Astro.props
     )
 
     const srText = menuButton.querySelector('.sr-only')
-
     const setMenuState = (open) => {
       menu.dataset.open = open ? 'true' : 'false'
       menu.setAttribute('aria-hidden', open ? 'false' : 'true')

@@ -1,31 +1,99 @@
 ---
 import NavBar from './NavBar.astro'
+import type { Language, SiteContent } from '../utils/content'
+
+interface Props {
+  lang: Language
+  header: SiteContent['header']
+  navigation: SiteContent['navigation']
+  basePath: string
+}
+
+const { lang, header, navigation, basePath } = Astro.props
 ---
 
-<header class="flex w-full justify-between sticky top-0 py-1 md:py-3 bg-inherit z-10">
-  <a href="/#home" rel="noopener noreferrer">
-    <h1 class="logo font-bold text-xl">
-      Thiago<span class="dark:text-[#06C300] text-[#31633D]">[</span>Martins<span class="dark:text-[#06C300] text-[#31633D]">]</span>
+<header
+  class="sticky top-0 z-30 flex w-full items-center justify-between gap-4 bg-gradient-to-b from-bgLight/95 via-bgLight/80 to-bgLight/40 px-3 py-3 backdrop-blur dark:from-bgDark/95 dark:via-bgDark/90 dark:to-bgDark/70 md:px-4"
+>
+  <a class="group inline-flex items-center gap-2" href={`${basePath}#home`} rel="noopener noreferrer">
+    <h1 class="logo text-xl font-bold tracking-tight">
+      Thiago<span class="text-[#31633D] transition-colors duration-200 group-hover:text-[#0CA000] dark:text-[#06C300]">[</span>
+      Martins
+      <span class="text-[#31633D] transition-colors duration-200 group-hover:text-[#0CA000] dark:text-[#06C300]">]</span>
     </h1>
+    <span class="hidden rounded-full bg-[#0CA000]/10 px-2 py-[2px] text-xs font-semibold text-[#0CA000] dark:bg-[#06C300]/20 dark:text-[#06C300] sm:inline">
+      {header.tagline}
+    </span>
   </a>
-  <div class="flex justify-center gap-7">
-    <NavBar />
-    <img
-      class="cursor-pointer transition ease-linear hover:scale-[.9] active:scale-95"
-      width={22}
-      height={22}
-      src="/icons/dark-mode.svg"
-      alt="darkMode Button"
-      id="theme-dark"
-    />
-    <img
-      class="cursor-pointer transition ease-linear hover:scale-[.9] active:scale-95"
-      width={22}
-      height={22}
-      src="/icons/light-mode.svg"
-      alt="darkMode Button"
-      id="theme-light"
-      hidden
-    />
+
+  <div class="flex items-center gap-4">
+    <NavBar navigation={navigation} basePath={basePath} />
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 p-1 backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/80">
+        <button
+          type="button"
+          id="theme-dark"
+          class="flex h-9 w-9 items-center justify-center rounded-full transition hover:bg-[#0CA000]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] active:scale-95"
+          aria-label={header.theme.dark}
+        >
+          <img
+            src="/icons/dark-mode.svg"
+            width={22}
+            height={22}
+            alt=""
+            aria-hidden="true"
+            class="h-[22px] w-[22px]"
+          />
+        </button>
+        <button
+          type="button"
+          id="theme-light"
+          class="flex h-9 w-9 items-center justify-center rounded-full transition hover:bg-[#0CA000]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] active:scale-95"
+          aria-label={header.theme.light}
+          hidden
+        >
+          <img
+            src="/icons/light-mode.svg"
+            width={22}
+            height={22}
+            alt=""
+            aria-hidden="true"
+            class="h-[22px] w-[22px] dark:brightness-200 dark:invert"
+          />
+        </button>
+      </div>
+      <div
+        role="group"
+        aria-label={header.language.toggleLabel}
+        class="flex items-center gap-[2px] rounded-full border border-slate-200 bg-white/70 p-1 text-xs font-semibold uppercase tracking-[0.3em] backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/80"
+      >
+        <button
+          type="button"
+          data-language-option="es"
+          aria-label={header.language.options.es}
+          aria-pressed={lang === 'es'}
+          class={`rounded-full px-3 py-1 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] ${
+            lang === 'es'
+              ? 'bg-[#0CA000] text-slate-950 dark:bg-[#06C300] dark:text-slate-900'
+              : 'text-slate-600 hover:text-[#0CA000] dark:text-slate-300 dark:hover:text-[#06C300]'
+          }`}
+        >
+          ES
+        </button>
+        <button
+          type="button"
+          data-language-option="en"
+          aria-label={header.language.options.en}
+          aria-pressed={lang === 'en'}
+          class={`rounded-full px-3 py-1 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] ${
+            lang === 'en'
+              ? 'bg-[#0CA000] text-slate-950 dark:bg-[#06C300] dark:text-slate-900'
+              : 'text-slate-600 hover:text-[#0CA000] dark:text-slate-300 dark:hover:text-[#06C300]'
+          }`}
+        >
+          EN
+        </button>
+      </div>
+    </div>
   </div>
 </header>

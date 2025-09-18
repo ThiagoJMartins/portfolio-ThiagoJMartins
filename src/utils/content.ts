@@ -487,6 +487,7 @@ const skillGroupEntries = [
       { slug: 'postgresql', label: 'PostgreSQL' },
       { slug: 'mongo', label: 'MongoDB' }
     ]
+  },
 ] satisfies {
   title: Localized<string>
   items: SkillItem[]

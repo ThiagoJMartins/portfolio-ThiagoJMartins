@@ -1,4 +1,5 @@
 export type Language = 'es' | 'en'
+
 export interface NavigationLink {
   id: string
   name: string
@@ -487,7 +488,7 @@ const skillGroupEntries = [
       { slug: 'postgresql', label: 'PostgreSQL' },
       { slug: 'mongo', label: 'MongoDB' }
     ]
-  },
+  }
 ] satisfies {
   title: Localized<string>
   items: SkillItem[]

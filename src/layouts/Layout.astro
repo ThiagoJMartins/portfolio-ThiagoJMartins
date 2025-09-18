@@ -163,8 +163,8 @@ const alternateLinks = languages.map((code) => ({
   const initialTheme = getStoredTheme() ?? (mediaQuery.matches ? 'dark' : 'light')
   applyTheme(initialTheme)
 
-  darkButton?.addEventListener('click', () => setTheme('light'))
-  lightButton?.addEventListener('click', () => setTheme('dark'))
+  darkButton?.addEventListener('click', () => setTheme('dark'))
+  lightButton?.addEventListener('click', () => setTheme('light'))
 
   mediaQuery.addEventListener('change', (event) => {
     if (!getStoredTheme()) {

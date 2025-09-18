@@ -1,48 +1,53 @@
 ---
 import '@fontsource/fira-code'
 import Header from '../components/Header.astro'
+import type { Language, SiteContent } from '../utils/content'
+import { languageRoutes, languages } from '../utils/content'
 
 interface Props {
   title: string
+  lang: Language
+  content: SiteContent
 }
 
-const { title } = Astro.props
+const { title, lang, content } = Astro.props
+const baseUrl = 'https://thiagomartins.vercel.app'
+const basePath = languageRoutes[lang] ?? '/'
+const alternateLinks = languages.map((code) => ({
+  lang: code,
+  href: `${baseUrl}${languageRoutes[code]}`
+}))
 ---
 
 <!doctype html>
-<html lang="es" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="description"
-      content="Portfolio de Thiago Martins, desarrollador fullstack especializado en eCommerce, SaaS y experiencias web modernas."
-    />
+    <meta name="description" content={content.meta.description} />
     <meta name="viewport" content="width=device-width" />
     <meta name="author" content="Thiago Martins" />
-    <meta name="keywords" content="Thiago Martins, desarrollador fullstack, JavaScript, React, Astro, Next.js, Node.js, Tailwind CSS" />
+    <meta name="keywords" content={content.meta.keywords} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" as="image" href="/Photo.webp" fetchpriority="high" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#0CA000" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
     <title>{title}</title>
-    <link rel="canonical" href="https://thiagomartins.vercel.app/" />
+    <link rel="canonical" href={content.meta.canonical} />
+    {alternateLinks.map((link) => (
+      <link rel="alternate" hreflang={link.lang} href={link.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={baseUrl} />
     <meta property="og:title" content={title} />
-    <meta
-      property="og:description"
-      content="Portfolio de Thiago Martins, desarrollador fullstack especializado en eCommerce, SaaS y experiencias web modernas."
-    />
+    <meta property="og:description" content={content.meta.description} />
     <meta property="og:site_name" content="Thiago Martins" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://thiagomartins.vercel.app/" />
+    <meta property="og:url" content={content.meta.canonical} />
     <meta property="og:image" content="/open-graph-image.png" />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content={content.meta.ogLocale} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta
-      name="twitter:description"
-      content="Portfolio de Thiago Martins, desarrollador fullstack especializado en eCommerce, SaaS y experiencias web modernas."
-    />
+    <meta name="twitter:description" content={content.meta.description} />
     <meta name="twitter:image" content="/open-graph-image.png" />
   </head>
   <body
@@ -52,10 +57,10 @@ const { title } = Astro.props
       href="#main-content"
       class="sr-only focus-visible:fixed focus-visible:left-1/2 focus-visible:top-4 focus-visible:z-50 focus-visible:-translate-x-1/2 focus-visible:rounded-full focus-visible:bg-[#0CA000] focus-visible:px-5 focus-visible:py-3 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-slate-900"
     >
-      Ir al contenido principal
+      {content.layout.skipToContent}
     </a>
     <div class="mx-auto flex w-full max-w-[1100px] flex-1 flex-col gap-10">
-      <Header />
+      <Header lang={lang} header={content.header} navigation={content.navigation} basePath={basePath} />
       <main id="main-content" class="flex flex-1 flex-col gap-16">
         <slot />
       </main>
@@ -108,9 +113,22 @@ const { title } = Astro.props
   }
 </style>
 <script is:inline>
+  const THEME_STORAGE_KEY = 'theme'
+  const LANGUAGE_STORAGE_KEY = 'language'
+  const currentLanguage = '{lang}'
+  const languageMap = JSON.parse('{JSON.stringify(languageRoutes)}')
+
   const getStoredTheme = () => {
     try {
-      return localStorage.getItem('theme')
+      return localStorage.getItem(THEME_STORAGE_KEY)
+    } catch (error) {
+      return null
+    }
+  }
+
+  const getStoredLanguage = () => {
+    try {
+      return localStorage.getItem(LANGUAGE_STORAGE_KEY)
     } catch (error) {
       return null
     }
@@ -136,7 +154,7 @@ const { title } = Astro.props
   const setTheme = (theme) => {
     applyTheme(theme)
     try {
-      localStorage.setItem('theme', theme)
+      localStorage.setItem(THEME_STORAGE_KEY, theme)
     } catch (error) {
       /* noop */
     }
@@ -157,10 +175,48 @@ const { title } = Astro.props
   window.addEventListener('pagehide', (event) => {
     if (event.persisted) {
       try {
-        localStorage.removeItem('theme')
+        localStorage.removeItem(THEME_STORAGE_KEY)
       } catch (error) {
         /* noop */
       }
     }
+  })
+
+  const storedLanguage = getStoredLanguage()
+
+  if (!storedLanguage) {
+    try {
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage)
+    } catch (error) {
+      /* noop */
+    }
+  } else if (storedLanguage !== currentLanguage && languageMap[storedLanguage]) {
+    window.location.replace(languageMap[storedLanguage])
+  }
+
+  const languageButtons = Array.from(document.querySelectorAll('[data-language-option]')).filter((element) =>
+    element instanceof HTMLElement
+  )
+
+  languageButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const targetLanguage = button.dataset.languageOption
+      if (!targetLanguage || targetLanguage === currentLanguage) {
+        return
+      }
+
+      const destination = languageMap[targetLanguage]
+      if (!destination) {
+        return
+      }
+
+      try {
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, targetLanguage)
+      } catch (error) {
+        /* noop */
+      }
+
+      window.location.href = destination
+    })
   })
 </script>

@@ -1,51 +1,30 @@
 ---
-import { certifications, projects, skillGroups } from '../utils/content'
+import type { SiteContent } from '../utils/content'
 
-const projectBadge = (isClient?: boolean) => (isClient ? 'Proyecto cliente' : 'Proyecto personal')
+interface Props {
+  myWork: SiteContent['myWork']
+}
+
+const { myWork } = Astro.props
+
+const projectBadge = (isClient?: boolean) => (isClient ? myWork.projectBadge.client : myWork.projectBadge.personal)
 const projectBadgeColor = (isClient?: boolean) =>
   isClient
     ? 'border border-[#0CA000]/40 bg-white/90 text-[#0CA000] dark:border-[#06C300]/40 dark:bg-slate-900/80 dark:text-[#06C300]'
     : 'border border-[#31633D]/40 bg-white/90 text-[#31633D] dark:border-[#06C300]/30 dark:bg-slate-900/80 dark:text-[#06C300]'
 
-const sortedProjects = [...projects].sort((a, b) => Number(b.job ?? false) - Number(a.job ?? false))
-
-const serviceKits = [
-  {
-    title: 'Sprint de discovery (2 semanas)',
-    description:
-      'Ideal para validar ideas o redefinir un producto. Construimos claridad sobre el problema, medimos oportunidades y trazamos un plan accionable.',
-    deliverables: ['Workshop de kickoff', 'Mapa de usuarios y journeys', 'Prototipo navegable', 'Backlog priorizado']
-  },
-  {
-    title: 'Desarrollo end-to-end',
-    description:
-      'Trabajamos juntos desde la arquitectura hasta la puesta en producción. Perfecto para MVPs o nuevos módulos críticos.',
-    deliverables: ['Arquitectura y set-up del stack', 'Componentes UI reutilizables', 'Integraciones con APIs externas', 'Pipeline de despliegue y monitoreo']
-  },
-  {
-    title: 'Optimización continua',
-    description:
-      'Acompañamiento mensual para escalar funcionalidades existentes, mejorar métricas clave y mantener una base de código sana.',
-    deliverables: ['Auditoría técnica inicial', 'Roadmap de optimizaciones', 'Implementación iterativa', 'Reportes con métricas y aprendizajes']
-  }
-]
+const sortedProjects = [...myWork.projects].sort((a, b) => Number(b.job ?? false) - Number(a.job ?? false))
 ---
 
 <section id="my-work" class="w-full space-y-12">
   <header class="space-y-3">
-    <h2 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">Mi trabajo</h2>
-    <p class="max-w-3xl text-sm text-slate-600 dark:text-slate-300 md:text-base">
-      Diseño y desarrollo productos digitales end-to-end. Aquí encontrarás una selección de proyectos, tecnologías y dinámicas de
-      trabajo que representan mi enfoque.
-    </p>
+    <h2 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">{myWork.title}</h2>
+    <p class="max-w-3xl text-sm text-slate-600 dark:text-slate-300 md:text-base">{myWork.description}</p>
   </header>
   <article class="space-y-6">
     <header class="flex flex-col gap-2">
-      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">Proyectos destacados</h3>
-      <p class="max-w-3xl text-sm text-slate-600 dark:text-slate-300 md:text-base">
-        Una combinación de colaboraciones con clientes y proyectos personales donde lideré discovery, arquitectura y entrega. Cada
-        caso refleja cómo conecto negocio, diseño y tecnología.
-      </p>
+      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">{myWork.projectsTitle}</h3>
+      <p class="max-w-3xl text-sm text-slate-600 dark:text-slate-300 md:text-base">{myWork.projectsDescription}</p>
     </header>
     <div class="grid gap-6">
       {sortedProjects.map((project) => (
@@ -68,7 +47,7 @@ const serviceKits = [
               <h4 class="text-xl font-semibold text-slate-900 dark:text-white">{project.name}</h4>
               <p class="text-sm text-slate-600 dark:text-slate-300 md:text-base">{project.description}</p>
             </div>
-            <ul class="grid gap-2 text-sm text-slate-600 dark:text-slate-300">
+            <ul class="mt-2 grid gap-2 text-sm text-slate-600 dark:text-slate-300">
               {project.highlights.map((highlight) => (
                 <li class="flex items-start gap-2">
                   <span aria-hidden="true" class="mt-1 inline-flex h-2 w-2 shrink-0 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></span>
@@ -87,7 +66,7 @@ const serviceKits = [
               rel="noopener noreferrer"
               class="inline-flex items-center gap-2 text-sm font-semibold text-[#31633D] transition hover:text-[#0CA000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:text-[#06C300] dark:hover:text-white"
             >
-              Ver proyecto
+              {myWork.projectCta}
               <span aria-hidden="true">↗</span>
             </a>
           </div>
@@ -98,14 +77,11 @@ const serviceKits = [
 
   <article class="space-y-6">
     <header class="flex flex-col gap-2">
-      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">Tecnologías y herramientas</h3>
-      <p class="text-sm text-slate-600 dark:text-slate-300 md:text-base">
-        Esta es la base con la que construyo productos confiables y adaptables. Selecciono cada pieza según el contexto del
-        proyecto, priorizando mantenibilidad y performance.
-      </p>
+      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">{myWork.skillsTitle}</h3>
+      <p class="text-sm text-slate-600 dark:text-slate-300 md:text-base">{myWork.skillsDescription}</p>
     </header>
     <div class="grid gap-5 md:grid-cols-2">
-      {skillGroups.map((group) => (
+      {myWork.skills.map((group) => (
         <div class="rounded-3xl border border-slate-200 bg-white/80 p-5 shadow-sm shadow-slate-400/20 dark:border-slate-700 dark:bg-slate-900/60 dark:shadow-black/30">
           <h4 class="text-lg font-semibold text-slate-900 dark:text-white">{group.title}</h4>
           <ul class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -123,14 +99,11 @@ const serviceKits = [
 
   <article class="space-y-6">
     <header class="flex flex-col gap-2">
-      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">Formas de colaborar</h3>
-      <p class="text-sm text-slate-600 dark:text-slate-300 md:text-base">
-        Podés sumarme por proyecto, por un sprint puntual o como partner continuo. Estas son algunas propuestas para comenzar a
-        trabajar juntos.
-      </p>
+      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">{myWork.servicesTitle}</h3>
+      <p class="text-sm text-slate-600 dark:text-slate-300 md:text-base">{myWork.servicesDescription}</p>
     </header>
     <div class="grid gap-6 md:grid-cols-3">
-      {serviceKits.map((kit) => (
+      {myWork.serviceKits.map((kit) => (
         <div class="flex h-full flex-col gap-4 rounded-3xl border border-dashed border-[#31633D]/40 bg-white/75 p-5 text-sm text-slate-600 shadow-sm shadow-[#31633D]/15 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-[#31633D]/20 dark:border-[#06C300]/40 dark:bg-slate-900/60 dark:text-slate-300 dark:shadow-[#06C300]/15">
           <div>
             <h4 class="text-lg font-semibold text-slate-900 dark:text-white">{kit.title}</h4>
@@ -151,14 +124,11 @@ const serviceKits = [
 
   <article class="space-y-6">
     <header class="flex flex-col gap-2">
-      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">Certificaciones & aprendizaje continuo</h3>
-      <p class="text-sm text-slate-600 dark:text-slate-300 md:text-base">
-        Me mantengo actualizado con formaciones que potencian mi capacidad de guiar equipos y tomar decisiones técnicas bien
-        fundamentadas.
-      </p>
+      <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">{myWork.certificationsTitle}</h3>
+      <p class="text-sm text-slate-600 dark:text-slate-300 md:text-base">{myWork.certificationsDescription}</p>
     </header>
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {certifications.map((certification) => (
+      {myWork.certifications.map((certification) => (
         <a
           href={certification.url}
           target="_blank"

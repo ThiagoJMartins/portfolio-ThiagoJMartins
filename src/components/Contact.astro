@@ -1,38 +1,32 @@
 ---
-import { contactOptions } from '../utils/content'
+import type { SiteContent } from '../utils/content'
+
+interface Props {
+  contact: SiteContent['contact']
+}
+
+const { contact } = Astro.props
 ---
 
 <section id="contact" class="w-full space-y-8">
   <div class="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
     <article class="space-y-4 text-base text-slate-600 dark:text-slate-300 md:text-lg">
-      <h2 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">Hablemos de tu proyecto</h2>
-      <p>
-        Me entusiasma colaborar con equipos que valoran la calidad y la comunicación transparente. Ya sea que necesites validar un
-        MVP, optimizar una plataforma existente o sumar manos expertas en un roadmap complejo, puedo acompañarte desde la estrategia
-        hasta la entrega.
-      </p>
-      <p>
-        Propongo ciclos de trabajo cortos con entregables claros, documentación accesible y métricas compartidas para que todas las
-        personas involucradas sepan qué sigue y por qué.
-      </p>
+      <h2 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">{contact.title}</h2>
+      {contact.paragraphs.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
       <ul class="grid gap-2 text-sm text-slate-600 dark:text-slate-300 md:text-base">
-        <li class="flex items-start gap-2">
-          <span aria-hidden="true" class="mt-1 inline-flex h-2 w-2 shrink-0 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></span>
-          <span>Disponible para colaboraciones remotas en husos horarios de América y Europa.</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <span aria-hidden="true" class="mt-1 inline-flex h-2 w-2 shrink-0 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></span>
-          <span>Respuesta garantizada en menos de 24 horas hábiles.</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <span aria-hidden="true" class="mt-1 inline-flex h-2 w-2 shrink-0 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></span>
-          <span>Podemos coordinar una videollamada exploratoria sin costo para revisar tus objetivos.</span>
-        </li>
+        {contact.bullets.map((bullet) => (
+          <li class="flex items-start gap-2">
+            <span aria-hidden="true" class="mt-1 inline-flex h-2 w-2 shrink-0 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></span>
+            <span>{bullet}</span>
+          </li>
+        ))}
       </ul>
     </article>
 
     <aside class="grid gap-5">
-      {contactOptions.map((option) => (
+      {contact.options.map((option) => (
         <a
           href={option.href}
           target={option.href.startsWith('http') ? '_blank' : undefined}
@@ -54,9 +48,6 @@ import { contactOptions } from '../utils/content'
   </div>
 
   <div class="rounded-[28px] border border-dashed border-[#31633D]/40 bg-white/75 p-6 text-sm text-slate-600 shadow-sm shadow-[#31633D]/15 dark:border-[#06C300]/40 dark:bg-slate-900/60 dark:text-slate-300 dark:shadow-[#06C300]/15">
-    <p>
-      Compartime contexto, objetivos y fechas clave. Prepararé una propuesta con las fases, estimaciones y formas de trabajo ideales
-      para tu equipo. Si preferís usar otra herramienta de comunicación (Slack, Notion, ClickUp), me adapto sin problema.
-    </p>
+    <p>{contact.closing}</p>
   </div>
 </section>

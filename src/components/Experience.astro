@@ -1,18 +1,21 @@
 ---
-import { experiences } from '../utils/content'
+import type { SiteContent } from '../utils/content'
+
+interface Props {
+  experience: SiteContent['experience']
+}
+
+const { experience } = Astro.props
 ---
 
 <section id="experience" class="w-full space-y-8">
   <header class="space-y-3">
-    <h2 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">Experiencia profesional</h2>
-    <p class="max-w-2xl text-sm text-slate-600 dark:text-slate-300 md:text-base">
-      Combino trabajo en estudio, proyectos para clientes y mentoría. Cada rol potenció mi habilidad para conectar necesidades de
-      negocio con entregas técnicas claras.
-    </p>
+    <h2 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">{experience.title}</h2>
+    <p class="max-w-2xl text-sm text-slate-600 dark:text-slate-300 md:text-base">{experience.description}</p>
   </header>
 
   <ol class="relative space-y-10 border-s border-slate-200 ps-6 dark:border-slate-700 md:space-y-12 md:ps-10">
-    {experiences.map((experience) => (
+    {experience.roles.map((role) => (
       <li class="relative">
         <div class="absolute -left-[26px] top-0 hidden h-full w-[1px] bg-gradient-to-b from-[#0CA000]/0 via-[#0CA000]/60 to-transparent dark:via-[#06C300]/70 md:block"></div>
         <div class="absolute -left-[30px] top-1 grid h-10 w-10 place-items-center rounded-full bg-[#0CA000]/10 text-[#0CA000] shadow-sm shadow-[#0CA000]/30 dark:bg-[#06C300]/15 dark:text-[#06C300] dark:shadow-[#06C300]/30">
@@ -22,19 +25,35 @@ import { experiences } from '../utils/content'
           <header class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
             <div class="space-y-1">
               <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
-                {experience.role}
-                <span class="text-base font-normal text-slate-500 dark:text-slate-300"> · {experience.company}</span>
+                {role.role}
+                <span class="text-base font-normal text-slate-500 dark:text-slate-300">
+                  {' '}
+                  ·
+                  {' '}
+                  {role.url ? (
+                    <a
+                      href={role.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="underline-offset-4 transition hover:text-[#0CA000] hover:underline dark:hover:text-[#06C300]"
+                    >
+                      {role.company}
+                    </a>
+                  ) : (
+                    role.company
+                  )}
+                </span>
               </h3>
-              <p class="text-sm font-semibold uppercase tracking-[0.35em] text-[#31633D] dark:text-[#06C300]">{experience.type}</p>
+              <p class="text-sm font-semibold uppercase tracking-[0.35em] text-[#31633D] dark:text-[#06C300]">{role.type}</p>
             </div>
             <p class="text-sm font-semibold text-slate-500 dark:text-slate-300 md:text-right">
-              {experience.period}
-              <span class="block text-xs font-normal text-slate-400 dark:text-slate-500">{experience.location}</span>
+              {role.period}
+              <span class="block text-xs font-normal text-slate-400 dark:text-slate-500">{role.location}</span>
             </p>
           </header>
-          <p class="mt-4 text-sm text-slate-600 dark:text-slate-300 md:text-base">{experience.description}</p>
+          <p class="mt-4 text-sm text-slate-600 dark:text-slate-300 md:text-base">{role.description}</p>
           <ul class="mt-4 grid gap-2 text-sm text-slate-600 dark:text-slate-300 md:text-base">
-            {experience.highlights.map((highlight) => (
+            {role.highlights.map((highlight) => (
               <li class="flex items-start gap-2">
                 <span aria-hidden="true" class="mt-1 inline-block h-2 w-2 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></span>
                 <span>{highlight}</span>
@@ -46,21 +65,21 @@ import { experiences } from '../utils/content'
     ))}
   </ol>
 
-  <div class="grid place-items-center">
-    <div class="flex flex-col items-center gap-4 rounded-3xl border border-dashed border-[#0CA000]/60 bg-white/70 p-6 text-center shadow-sm shadow-[#0CA000]/20 dark:border-[#06C300]/60 dark:bg-slate-900/60 dark:shadow-[#06C300]/20">
-      <p class="text-lg font-semibold text-slate-800 dark:text-slate-100">¿Querés profundizar en mi trayectoria?</p>
-      <p class="max-w-md text-sm text-slate-600 dark:text-slate-300">
-        Descargá mi CV para ver resultados detallados, stacks preferidos y recomendaciones de clientes con los que he trabajado.
-      </p>
-      <a
-        href="/Resume.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 rounded-full bg-[#0CA000] px-5 py-2 text-sm font-semibold text-slate-950 transition hover:bg-[#0CA000]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:bg-[#06C300] dark:text-slate-900"
-      >
-        <img src="/icons/arrow.svg" width="20" height="20" alt="" aria-hidden="true" />
-        Descargar CV
-      </a>
+  {experience.callout && (
+    <div class="grid place-items-center">
+      <div class="flex flex-col items-center gap-4 rounded-3xl border border-dashed border-[#0CA000]/60 bg-white/70 p-6 text-center shadow-sm shadow-[#0CA000]/20 dark:border-[#06C300]/60 dark:bg-slate-900/60 dark:shadow-[#06C300]/20">
+        <p class="text-lg font-semibold text-slate-800 dark:text-slate-100">{experience.callout.title}</p>
+        <p class="max-w-md text-sm text-slate-600 dark:text-slate-300">{experience.callout.description}</p>
+        <a
+          href={experience.callout.ctaHref}
+          target={experience.callout.target}
+          rel={experience.callout.rel}
+          class="inline-flex items-center gap-2 rounded-full bg-[#0CA000] px-5 py-2 text-sm font-semibold text-slate-950 transition hover:bg-[#0CA000]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:bg-[#06C300] dark:text-slate-900"
+        >
+          <img src={experience.callout.ctaIcon} width="20" height="20" alt="" aria-hidden="true" />
+          {experience.callout.ctaLabel}
+        </a>
+      </div>
     </div>
-  </div>
+  )}
 </section>

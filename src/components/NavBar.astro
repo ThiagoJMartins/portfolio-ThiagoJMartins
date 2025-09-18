@@ -1,22 +1,27 @@
 ---
-import { navigationLinks } from '../utils/content'
+import type { SiteContent } from '../utils/content'
+
+interface Props {
+  navigation: SiteContent['navigation']
+  basePath: string
+}
+
+const { navigation, basePath } = Astro.props
 ---
 
 <div class="flex items-center gap-3">
-  <nav aria-label="Navegación principal" class="hidden text-sm font-semibold lg:flex">
+  <nav aria-label={navigation.ariaLabel} class="hidden text-sm font-semibold lg:flex">
     <ul class="flex items-center gap-2 rounded-full bg-white/40 px-3 py-1 text-slate-700 backdrop-blur-sm transition dark:bg-white/10 dark:text-slate-200">
-      {
-        navigationLinks.map((link) => (
-          <li>
-            <a
-              href={`/#${link.id}`}
-              class="rounded-full px-4 py-1 transition hover:bg-[#0CA000] hover:text-slate-950 dark:hover:bg-[#06C300]"
-            >
-              {link.name}
-            </a>
-          </li>
-        ))
-      }
+      {navigation.links.map((link) => (
+        <li>
+          <a
+            href={`${basePath}#${link.id}`}
+            class="rounded-full px-4 py-1 transition hover:bg-[#0CA000] hover:text-slate-950 dark:hover:bg-[#06C300]"
+          >
+            {link.name}
+          </a>
+        </li>
+      ))}
     </ul>
   </nav>
 
@@ -25,10 +30,10 @@ import { navigationLinks } from '../utils/content'
     class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white/70 text-slate-700 shadow-sm transition hover:border-[#0CA000] hover:text-[#0CA000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-200 dark:hover:border-[#06C300] dark:hover:text-[#06C300] lg:hidden"
     aria-expanded="false"
     aria-controls="mobile-navigation"
-    aria-label="Abrir menú de navegación"
+    aria-label={navigation.openMenuLabel}
     data-menu-button
   >
-    <span class="sr-only">Abrir menú</span>
+    <span class="sr-only">{navigation.openMenuSrLabel}</span>
     <svg
       class="h-5 w-5"
       viewBox="0 0 24 24"
@@ -59,14 +64,15 @@ import { navigationLinks } from '../utils/content'
   >
     <div class="flex items-center justify-between">
       <p id="mobile-navigation-title" class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400">
-        Navegación
+        {navigation.mobileTitle}
       </p>
       <button
         type="button"
         class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition hover:border-[#0CA000] hover:text-[#0CA000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C300] dark:border-slate-600 dark:text-slate-200 dark:hover:border-[#06C300] dark:hover:text-[#06C300]"
+        aria-label={navigation.closeMenuLabel}
         data-menu-close
       >
-        <span class="sr-only">Cerrar menú</span>
+        <span class="sr-only">{navigation.closeMenuSrLabel}</span>
         <svg
           class="h-5 w-5"
           viewBox="0 0 24 24"
@@ -82,34 +88,32 @@ import { navigationLinks } from '../utils/content'
       </button>
     </div>
 
-    <nav aria-label="Navegación móvil" class="flex-1 min-h-0 overflow-y-auto">
+    <nav aria-label={navigation.mobileNavLabel} class="flex-1 min-h-0 overflow-y-auto">
       <ul class="space-y-3">
-        {
-          navigationLinks.map((link) => (
-            <li>
-              <a
-                href={`/#${link.id}`}
-                class="flex items-center justify-between gap-4 rounded-2xl bg-white/90 px-4 py-3 text-base font-semibold text-slate-900 shadow-md shadow-slate-950/10 transition hover:bg-[#0CA000]/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0CA000]/70 dark:bg-slate-900/80 dark:text-white dark:shadow-black/20 dark:hover:bg-[#06C300]/15"
-                data-menu-link
-              >
-                <span class="flex items-center gap-3">
-                  <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 transition dark:bg-slate-800 dark:text-slate-200">
-                    <img src={`/icons/${link.icon}`} alt="" aria-hidden="true" class="h-5 w-5 dark:brightness-200 dark:invert" />
-                  </span>
-                  {link.name}
+        {navigation.links.map((link) => (
+          <li>
+            <a
+              href={`${basePath}#${link.id}`}
+              class="flex items-center justify-between gap-4 rounded-2xl bg-white/90 px-4 py-3 text-base font-semibold text-slate-900 shadow-md shadow-slate-950/10 transition hover:bg-[#0CA000]/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0CA000]/70 dark:bg-slate-900/80 dark:text-white dark:shadow-black/20 dark:hover:bg-[#06C300]/15"
+              data-menu-link
+            >
+              <span class="flex items-center gap-3">
+                <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 transition dark:bg-slate-800 dark:text-slate-200">
+                  <img src={`/icons/${link.icon}`} alt="" aria-hidden="true" class="h-5 w-5 dark:brightness-200 dark:invert" />
                 </span>
-                <svg class="h-4 w-4 text-slate-400 transition dark:text-slate-500" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                  <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </a>
-            </li>
-          ))
-        }
+                {link.name}
+              </span>
+              <svg class="h-4 w-4 text-slate-400 transition dark:text-slate-500" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          </li>
+        ))}
       </ul>
     </nav>
 
     <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 text-sm text-slate-600 shadow-sm shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300 dark:shadow-black/20">
-      <p>¿Listo para crear algo juntos? Agendemos una reunión para diseñar tu siguiente lanzamiento.</p>
+      <p>{navigation.prompt}</p>
     </div>
   </div>
 </div>
@@ -119,6 +123,8 @@ import { navigationLinks } from '../utils/content'
   const menu = document.querySelector('[data-mobile-menu]')
 
   if (menuButton && menu) {
+    const labels = JSON.parse('{JSON.stringify({ openMenuLabel: navigation.openMenuLabel, closeMenuLabel: navigation.closeMenuLabel })}')
+    const srLabels = JSON.parse('{JSON.stringify({ open: navigation.openMenuSrLabel, close: navigation.closeMenuSrLabel })}')
     const closeButton = menu.querySelector('[data-menu-close]')
     const menuLinks = Array.from(menu.querySelectorAll('[data-menu-link]')).filter((element) =>
       element instanceof HTMLElement
@@ -127,11 +133,15 @@ import { navigationLinks } from '../utils/content'
       element instanceof HTMLElement
     )
 
+    const srText = menuButton.querySelector('.sr-only')
     const setMenuState = (open) => {
       menu.dataset.open = open ? 'true' : 'false'
       menu.setAttribute('aria-hidden', open ? 'false' : 'true')
       menuButton.setAttribute('aria-expanded', open ? 'true' : 'false')
-      menuButton.setAttribute('aria-label', open ? 'Cerrar menú de navegación' : 'Abrir menú de navegación')
+      menuButton.setAttribute('aria-label', open ? labels.closeMenuLabel : labels.openMenuLabel)
+      if (srText) {
+        srText.textContent = open ? srLabels.close : srLabels.open
+      }
       document.body.classList.toggle('overflow-hidden', open)
 
       if (open) {

@@ -1,75 +1,33 @@
 ---
-const focusAreas = [
-  {
-    title: 'Estrategia & producto',
-    description:
-      'Transformo ideas en roadmaps priorizados. Facilito workshops de discovery, defino métricas y alinear a los equipos para que cada release tenga propósito.'
-  },
-  {
-    title: 'Experiencias centradas en negocio',
-    description:
-      'Diseño interfaces accesibles, microcopy y flujos que mejoran la conversión. Cada feature viene acompañado de hipótesis y criterios de éxito.'
-  },
-  {
-    title: 'Stack moderno y escalable',
-    description:
-      'Trabajo con TypeScript, React, Astro y Node.js para construir bases mantenibles, modulares y preparadas para crecer junto a tu compañía.'
-  }
-]
+import type { SiteContent } from '../utils/content'
 
-const workflow = [
-  {
-    step: '01',
-    title: 'Descubrimiento y alineación',
-    description:
-      'Mapeo objetivos, audiencias y restricciones. Crearemos un backlog priorizado que equilibre impacto y esfuerzo.'
-  },
-  {
-    step: '02',
-    title: 'Diseño técnico y prototipos',
-    description:
-      'Defino arquitectura, modelo de datos y componentes reutilizables. Validamos la experiencia con prototipos navegables.'
-  },
-  {
-    step: '03',
-    title: 'Entrega iterativa y medición',
-    description:
-      'Lanzamos en ciclos cortos, medimos resultados y ajustamos con datos reales para mantener un crecimiento constante.'
-  }
-]
+interface Props {
+  about: SiteContent['about']
+}
+
+const { about } = Astro.props
+
 ---
 
 <section id="about" class="w-full space-y-10">
   <div class="grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
     <article class="space-y-5 text-base text-slate-600 dark:text-slate-300 md:text-lg">
-      <h2 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">Sobre mí</h2>
-      <p>
-        Soy un desarrollador fullstack orientado a producto. Disfruto trabajar codo a codo con fundadores, PMs y diseñadores para
-        convertir ideas ambiciosas en experiencias digitales reales. Mi enfoque combina investigación, storytelling y tecnología
-        para crear soluciones que las personas disfrutan usar.
-      </p>
-      <p>
-        Aporto claridad cuando el proyecto recién comienza y disciplina cuando hay que escalar. Documentación cuidada, comunicación
-        transparente y entregas iterativas son mis herramientas para que cada etapa avance con confianza.
-      </p>
+      <h2 class="text-3xl font-extrabold leading-tight text-slate-900 dark:text-white">{about.title}</h2>
+      {about.paragraphs.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
       <dl class="grid gap-4 rounded-3xl border border-slate-200 bg-white/70 p-5 text-sm text-slate-600 shadow-sm shadow-slate-400/20 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300 dark:shadow-black/30">
-        <div class="flex items-start gap-3">
-          <dt class="mt-1 h-2.5 w-2.5 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></dt>
-          <dd>Basado en Rosario, Argentina, colaborando de forma remota con equipos de LATAM y Europa.</dd>
-        </div>
-        <div class="flex items-start gap-3">
-          <dt class="mt-1 h-2.5 w-2.5 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></dt>
-          <dd>Bilingüe (es/en) para facilitar colaboración con stakeholders y documentación internacional.</dd>
-        </div>
-        <div class="flex items-start gap-3">
-          <dt class="mt-1 h-2.5 w-2.5 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></dt>
-          <dd>Mi visión es construir productos que combinen impacto medible y experiencias que cuenten historias.</dd>
-        </div>
+        {about.highlights.map((highlight) => (
+          <div class="flex items-start gap-3">
+            <dt class="mt-1 h-2.5 w-2.5 rounded-full bg-[#0CA000] dark:bg-[#06C300]"></dt>
+            <dd>{highlight}</dd>
+          </div>
+        ))}
       </dl>
     </article>
 
     <article class="grid gap-4">
-      {focusAreas.map((area) => (
+      {about.focusAreas.map((area) => (
         <div class="rounded-3xl border border-slate-200 bg-white/80 p-5 shadow-sm shadow-slate-400/20 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-400/30 dark:border-slate-700 dark:bg-slate-900/60 dark:shadow-black/30">
           <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{area.title}</h3>
           <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">{area.description}</p>
@@ -79,13 +37,10 @@ const workflow = [
   </div>
 
   <section class="rounded-[32px] border border-slate-200 bg-white/80 p-6 shadow-sm shadow-slate-400/20 dark:border-slate-700 dark:bg-slate-900/60 dark:shadow-black/30 md:p-10">
-    <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">Cómo trabajo</h3>
-    <p class="mt-3 max-w-3xl text-sm text-slate-600 dark:text-slate-300 md:text-base">
-      Cada proyecto es distinto, pero la combinación de discovery estratégico, diseño técnico y ciclos cortos de entrega permite
-      aprender más rápido. Este es el flujo que seguimos juntos:
-    </p>
+    <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">{about.workflowTitle}</h3>
+    <p class="mt-3 max-w-3xl text-sm text-slate-600 dark:text-slate-300 md:text-base">{about.workflowDescription}</p>
     <ol class="mt-8 grid gap-6 md:grid-cols-3">
-      {workflow.map((step) => (
+      {about.workflowSteps.map((step) => (
         <li class="flex h-full flex-col gap-3 rounded-3xl border border-dashed border-[#31633D]/40 bg-white/70 p-5 text-slate-600 shadow-sm shadow-[#31633D]/15 dark:border-[#06C300]/40 dark:bg-slate-900/60 dark:text-slate-300 dark:shadow-[#06C300]/15">
           <span class="text-xs font-semibold uppercase tracking-[0.35em] text-[#31633D] dark:text-[#06C300]">{step.step}</span>
           <h4 class="text-lg font-semibold text-slate-900 dark:text-white">{step.title}</h4>

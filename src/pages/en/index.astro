@@ -1,14 +1,14 @@
 ---
-import MyWork from '../components/my-work.astro'
-import Experience from '../components/Experience.astro'
-import About from '../components/About.astro'
-import Hero from '../components/Hero.astro'
-import Layout from '../layouts/Layout.astro'
-import Footer from '../components/Footer.astro'
-import Contact from '../components/Contact.astro'
-import { getContent, languageRoutes } from '../utils/content'
+import MyWork from '../../components/my-work.astro'
+import Experience from '../../components/Experience.astro'
+import About from '../../components/About.astro'
+import Hero from '../../components/Hero.astro'
+import Layout from '../../layouts/Layout.astro'
+import Footer from '../../components/Footer.astro'
+import Contact from '../../components/Contact.astro'
+import { getContent, languageRoutes } from '../../utils/content'
 
-const lang = 'es'
+const lang = 'en'
 const content = getContent(lang)
 const basePath = languageRoutes[lang]
 ---

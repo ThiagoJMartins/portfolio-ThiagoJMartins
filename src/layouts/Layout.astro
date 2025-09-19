@@ -1,111 +1,233 @@
 ---
 import '@fontsource/fira-code'
 import Header from '../components/Header.astro'
+import type { Language, SiteContent } from '../utils/content'
+import { languageRoutes, languages } from '../utils/content'
+
 interface Props {
   title: string
+  lang: Language
+  content: SiteContent
 }
 
-const { title } = Astro.props
+const { title, lang, content } = Astro.props
+const baseUrl = 'https://thiagomartins.vercel.app'
+const basePath = languageRoutes[lang] ?? '/'
+const alternateLinks = languages.map((code) => ({
+  lang: code,
+  href: `${baseUrl}${languageRoutes[code]}`
+}))
 ---
 
 <!doctype html>
-<html lang="es" class="">
+<html
+  lang={lang}
+  class="scroll-smooth"
+  data-language-map={JSON.stringify(languageRoutes)}
+>
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="description"
-      content="Portfolio of Thiago Martins, Fullstack Developer with experience in JavaScript, React, Astro, NextJS, TailwindCSS, NodeJS, among other related technologies"
-    />
+    <meta name="description" content={content.meta.description} />
     <meta name="viewport" content="width=device-width" />
+    <meta name="author" content="Thiago Martins" />
+    <meta name="keywords" content={content.meta.keywords} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" as="image" href="/Photo.webp" fetchpriority="high" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0CA000" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
     <title>{title}</title>
+    <link rel="canonical" href={content.meta.canonical} />
+    {alternateLinks.map((link) => (
+      <link rel="alternate" hreflang={link.lang} href={link.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={baseUrl} />
     <meta property="og:title" content={title} />
-    <meta
-      property="og:description"
-      content="Portfolio of Thiago Martins, Fullstack Developer with experience in JavaScript, React, Astro, NextJS, TailwindCSS, NodeJS, among other related technologies"
-    />
-    <meta property="og:site_name" content="David.dev" />
+    <meta property="og:description" content={content.meta.description} />
+    <meta property="og:site_name" content="Thiago Martins" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://thiagomartins.vercel.app/" />
+    <meta property="og:url" content={content.meta.canonical} />
     <meta property="og:image" content="/open-graph-image.png" />
+    <meta property="og:locale" content={content.meta.ogLocale} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={content.meta.description} />
+    <meta name="twitter:image" content="/open-graph-image.png" />
   </head>
   <body
-    class="bg-bgLight text-[#3d3d3d] dark:bg-bgDark px-3 md:px-6 pb-5 dark:text-white w-full max-w-[1080px] m-auto">
-    <Header />
-    <main class="flex flex-col gap-14">
-      <slot />
-    </main>
+    class="flex min-h-screen flex-col bg-gradient-to-br from-[#f4f7f5] via-bgLight to-white px-3 pb-12 text-slate-800 transition-colors duration-300 dark:from-[#0b1221] dark:via-bgDark dark:to-[#05080f] dark:text-slate-100 sm:px-6"
+  >
+    <a
+      href="#main-content"
+      class="sr-only focus-visible:fixed focus-visible:left-1/2 focus-visible:top-4 focus-visible:z-50 focus-visible:-translate-x-1/2 focus-visible:rounded-full focus-visible:bg-[#0CA000] focus-visible:px-5 focus-visible:py-3 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-slate-900"
+    >
+      {content.layout.skipToContent}
+    </a>
+    <div class="mx-auto flex w-full max-w-[1100px] flex-1 flex-col gap-10">
+      <Header lang={lang} header={content.header} navigation={content.navigation} basePath={basePath} />
+      <main id="main-content" class="flex flex-1 flex-col gap-16">
+        <slot />
+      </main>
+    </div>
   </body>
 </html>
 <style is:global>
+  :root {
+    color-scheme: light dark;
+  }
+
   html {
-    font-family: sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     scroll-behavior: smooth;
+    background-color: transparent;
+  }
+
+  body {
+    margin: 0;
   }
 
   #footer,
   .logo {
-    font-family: 'Fira Code', sans-serif;
+    font-family: 'Fira Code', monospace;
   }
 
   h2 {
-    font-size: 40px;
-    line-height: 36px;
-    font-weight: 700;
+    font-size: clamp(2.2rem, 3vw + 1rem, 3.2rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: inherit;
   }
 
   h3 {
-    font-size: 20px;
+    font-size: clamp(1.4rem, 2.5vw + 0.6rem, 1.75rem);
+    font-weight: 700;
+    color: inherit;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 </style>
 <script is:inline>
-  const theme = (() => {
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-      return localStorage.getItem('theme')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark'
-    } else return 'light'
+  const THEME_STORAGE_KEY = 'theme'
+  const LANGUAGE_STORAGE_KEY = 'language'
+  const html = document.documentElement
+
+  const currentLanguage = html.lang || 'es'
+  const languageMap = (() => {
+    try {
+      return JSON.parse(html.dataset.languageMap ?? '{}')
+    } catch (error) {
+      return {}
+    }
   })()
 
+  const getStoredTheme = () => {
+    try {
+      return localStorage.getItem(THEME_STORAGE_KEY)
+    } catch (error) {
+      return null
+    }
+  }
+
+  const getStoredLanguage = () => {
+    try {
+      return localStorage.getItem(LANGUAGE_STORAGE_KEY)
+    } catch (error) {
+      return null
+    }
+  }
+
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
   const lightButton = document.getElementById('theme-light')
   const darkButton = document.getElementById('theme-dark')
 
-  if (theme === 'light') {
-    if (!darkButton.hasAttribute('hidden')) {
-      darkButton.toggleAttribute('hidden')
-      lightButton.toggleAttribute('hidden')
+  const applyTheme = (theme) => {
+    if (theme === 'dark') {
+      html.classList.add('dark')
+      lightButton?.removeAttribute('hidden')
+      darkButton?.setAttribute('hidden', '')
+    } else {
+      html.classList.remove('dark')
+      darkButton?.removeAttribute('hidden')
+      lightButton?.setAttribute('hidden', '')
     }
-    document.documentElement.classList.remove('dark')
-  } else {
-    if (!lightButton.hasAttribute('hidden')) {
-      darkButton.toggleAttribute('hidden')
-      lightButton.toggleAttribute('hidden')
-    }
-    document.documentElement.classList.add('dark')
   }
-  localStorage.setItem('theme', theme)
 
-  // Evento Click al botón theme
-  darkButton.addEventListener('click', () => {
-    if (localStorage.getItem('theme') === 'dark') {
-      document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
-      darkButton.toggleAttribute('hidden')
-      lightButton.toggleAttribute('hidden')
+  const setTheme = (theme) => {
+    applyTheme(theme)
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme)
+    } catch (error) {
+      /* noop */
+    }
+  }
+
+  const initialTheme = getStoredTheme() ?? (mediaQuery.matches ? 'dark' : 'light')
+  applyTheme(initialTheme)
+
+  darkButton?.addEventListener('click', () => setTheme('dark'))
+  lightButton?.addEventListener('click', () => setTheme('light'))
+
+  mediaQuery.addEventListener('change', (event) => {
+    if (!getStoredTheme()) {
+      setTheme(event.matches ? 'dark' : 'light')
     }
   })
-  lightButton.addEventListener('click', () => {
-    if (localStorage.getItem('theme') !== 'dark') {
-      document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
-      darkButton.toggleAttribute('hidden')
-      lightButton.toggleAttribute('hidden')
+
+  window.addEventListener('pagehide', (event) => {
+    if (event.persisted) {
+      try {
+        localStorage.removeItem(THEME_STORAGE_KEY)
+      } catch (error) {
+        /* noop */
+      }
     }
   })
 
-  const eventFunction = (event) => {
-    if (event.persisted) localStorage.removeItem('theme')
+  const storedLanguage = getStoredLanguage()
+
+  if (!storedLanguage) {
+    try {
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage)
+    } catch (error) {
+      /* noop */
+    }
+  } else if (storedLanguage !== currentLanguage && languageMap[storedLanguage]) {
+    window.location.replace(languageMap[storedLanguage])
   }
-  window.addEventListener('pagehide', eventFunction)
+
+  const languageButtons = Array.from(document.querySelectorAll('[data-language-option]')).filter((element) =>
+    element instanceof HTMLElement
+  )
+
+  languageButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const targetLanguage = button.dataset.languageOption
+      if (!targetLanguage || targetLanguage === currentLanguage) {
+        return
+      }
+
+      const destination = languageMap[targetLanguage]
+      if (!destination) {
+        return
+      }
+
+      try {
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, targetLanguage)
+      } catch (error) {
+        /* noop */
+      }
+
+      window.location.href = destination
+    })
+  })
 </script>

@@ -20,7 +20,11 @@ const alternateLinks = languages.map((code) => ({
 ---
 
 <!doctype html>
-<html lang={lang} class="scroll-smooth">
+<html
+  lang={lang}
+  class="scroll-smooth"
+  data-language-map={JSON.stringify(languageRoutes)}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={content.meta.description} />
@@ -115,8 +119,16 @@ const alternateLinks = languages.map((code) => ({
 <script is:inline>
   const THEME_STORAGE_KEY = 'theme'
   const LANGUAGE_STORAGE_KEY = 'language'
-  const currentLanguage = '{lang}'
-  const languageMap = JSON.parse('{JSON.stringify(languageRoutes)}')
+  const html = document.documentElement
+
+  const currentLanguage = html.lang || 'es'
+  const languageMap = (() => {
+    try {
+      return JSON.parse(html.dataset.languageMap ?? '{}')
+    } catch (error) {
+      return {}
+    }
+  })()
 
   const getStoredTheme = () => {
     try {
@@ -134,7 +146,6 @@ const alternateLinks = languages.map((code) => ({
     }
   }
 
-  const html = document.documentElement
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
   const lightButton = document.getElementById('theme-light')
   const darkButton = document.getElementById('theme-dark')

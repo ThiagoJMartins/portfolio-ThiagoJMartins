@@ -9,9 +9,9 @@ interface Props {
 const { navigation, basePath } = Astro.props
 ---
 
-<div class="flex items-center gap-3">
+<div class="flex min-w-0 flex-1 flex-wrap items-center justify-end gap-3">
   <nav aria-label={navigation.ariaLabel} class="hidden text-sm font-semibold lg:flex">
-    <ul class="flex items-center gap-2 rounded-full bg-white/40 px-3 py-1 text-slate-700 backdrop-blur-sm transition dark:bg-white/10 dark:text-slate-200">
+    <ul class="flex flex-wrap items-center gap-2 rounded-full bg-white/40 px-3 py-1 text-slate-700 backdrop-blur-sm transition dark:bg-white/10 dark:text-slate-200">
       {navigation.links.map((link) => (
         <li>
           <a
@@ -32,6 +32,10 @@ const { navigation, basePath } = Astro.props
     aria-controls="mobile-navigation"
     aria-label={navigation.openMenuLabel}
     data-menu-button
+    data-open-label={navigation.openMenuLabel}
+    data-close-label={navigation.closeMenuLabel}
+    data-open-sr-label={navigation.openMenuSrLabel}
+    data-close-sr-label={navigation.closeMenuSrLabel}
   >
     <span class="sr-only">{navigation.openMenuSrLabel}</span>
     <svg
@@ -123,8 +127,10 @@ const { navigation, basePath } = Astro.props
   const menu = document.querySelector('[data-mobile-menu]')
 
   if (menuButton && menu) {
-    const labels = JSON.parse('{JSON.stringify({ openMenuLabel: navigation.openMenuLabel, closeMenuLabel: navigation.closeMenuLabel })}')
-    const srLabels = JSON.parse('{JSON.stringify({ open: navigation.openMenuSrLabel, close: navigation.closeMenuSrLabel })}')
+    const openLabel = menuButton.dataset.openLabel ?? menuButton.getAttribute('aria-label') ?? ''
+    const closeLabel = menuButton.dataset.closeLabel ?? ''
+    const openSrLabel = menuButton.dataset.openSrLabel ?? ''
+    const closeSrLabel = menuButton.dataset.closeSrLabel ?? ''
     const closeButton = menu.querySelector('[data-menu-close]')
     const menuLinks = Array.from(menu.querySelectorAll('[data-menu-link]')).filter((element) =>
       element instanceof HTMLElement
@@ -134,13 +140,14 @@ const { navigation, basePath } = Astro.props
     )
 
     const srText = menuButton.querySelector('.sr-only')
+
     const setMenuState = (open) => {
       menu.dataset.open = open ? 'true' : 'false'
       menu.setAttribute('aria-hidden', open ? 'false' : 'true')
       menuButton.setAttribute('aria-expanded', open ? 'true' : 'false')
-      menuButton.setAttribute('aria-label', open ? labels.closeMenuLabel : labels.openMenuLabel)
+      menuButton.setAttribute('aria-label', open ? closeLabel || openLabel : openLabel)
       if (srText) {
-        srText.textContent = open ? srLabels.close : srLabels.open
+        srText.textContent = open ? closeSrLabel || openSrLabel : openSrLabel
       }
       document.body.classList.toggle('overflow-hidden', open)
 
